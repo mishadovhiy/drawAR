@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LpR-aP-dSN">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="DrawAR" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3AW-Vo-JSx">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </arscnView>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wYn-BV-4eW">
+                                <rect key="frame" x="76.666666666666686" y="59" width="240" height="200"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="yb0-kR-pNW">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="200"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4tS-kD-1cS" customClass="RegView" customModule="DrawAR" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="100"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8SQ-r3-NQC">
+                                                        <rect key="frame" x="95.333333333333329" y="54.666666666666671" width="139.66666666666669" height="40.333333333333329"/>
+                                                        <state key="normal" title="Button"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="add new image"/>
+                                                        <connections>
+                                                            <action selector="addNewDrawingPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eMK-CB-b6o"/>
+                                                        </connections>
+                                                    </button>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="E0C-UG-VtM">
+                                                        <rect key="frame" x="10" y="5" width="220" height="90"/>
+                                                        <subviews>
+                                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="NWa-nZ-TZf">
+                                                                <rect key="frame" x="0.0" y="0.0" width="220" height="76.666666666666671"/>
+                                                                <segments>
+                                                                    <segment title="ar"/>
+                                                                    <segment title="move"/>
+                                                                    <segment title="draw"/>
+                                                                </segments>
+                                                                <connections>
+                                                                    <action selector="segmentedChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="lUB-IT-eCp"/>
+                                                                </connections>
+                                                            </segmentedControl>
+                                                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="u6Z-gf-oTW">
+                                                                <rect key="frame" x="0.0" y="75.666666666666657" width="220" height="14.333333333333329"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="0.94999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="8SQ-r3-NQC" secondAttribute="trailing" constant="5" id="142-d0-IFX"/>
+                                                    <constraint firstAttribute="height" constant="100" id="4OV-sb-teO"/>
+                                                    <constraint firstAttribute="trailing" secondItem="E0C-UG-VtM" secondAttribute="trailing" constant="10" id="Z3D-FR-GUL"/>
+                                                    <constraint firstAttribute="bottom" secondItem="8SQ-r3-NQC" secondAttribute="bottom" constant="5" id="cuC-Zh-nbG"/>
+                                                    <constraint firstItem="E0C-UG-VtM" firstAttribute="leading" secondItem="4tS-kD-1cS" secondAttribute="leading" constant="10" id="h8t-Kc-Sf8"/>
+                                                    <constraint firstAttribute="bottom" secondItem="E0C-UG-VtM" secondAttribute="bottom" constant="5" id="pxZ-gH-WX9"/>
+                                                    <constraint firstItem="E0C-UG-VtM" firstAttribute="top" secondItem="4tS-kD-1cS" secondAttribute="top" constant="5" id="zKs-9F-AGe"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rf1-tW-kNW">
+                                                <rect key="frame" x="0.0" y="100" width="240" height="100"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="yb0-kR-pNW" secondAttribute="trailing" id="1ls-6J-1KC"/>
+                                    <constraint firstAttribute="bottom" secondItem="yb0-kR-pNW" secondAttribute="bottom" id="6xG-Dv-cro"/>
+                                    <constraint firstItem="yb0-kR-pNW" firstAttribute="leading" secondItem="wYn-BV-4eW" secondAttribute="leading" id="T8S-jI-wcH"/>
+                                    <constraint firstItem="yb0-kR-pNW" firstAttribute="top" secondItem="wYn-BV-4eW" secondAttribute="top" id="ZE4-Cw-f2O"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="3AW-Vo-JSx" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="4PH-kT-b8q"/>
+                            <constraint firstItem="wYn-BV-4eW" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="4s1-2Q-T8B"/>
+                            <constraint firstItem="3AW-Vo-JSx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="53O-0r-1U7"/>
+                            <constraint firstItem="wYn-BV-4eW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TeE-RG-AIr"/>
+                            <constraint firstAttribute="trailing" secondItem="3AW-Vo-JSx" secondAttribute="trailing" id="eGQ-yC-7ec"/>
+                            <constraint firstAttribute="bottom" secondItem="3AW-Vo-JSx" secondAttribute="bottom" id="ud1-mq-wGt"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="sceneView" destination="3AW-Vo-JSx" id="zKY-Hv-6YY"/>
+                        <outlet property="segmentedControl" destination="NWa-nZ-TZf" id="25T-uR-9eK"/>
+                        <outlet property="settingsLabel" destination="u6Z-gf-oTW" id="LGQ-eY-MJc"/>
+                        <outlet property="settingsStackView" destination="yb0-kR-pNW" id="cfu-ug-oNB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-10" y="4"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="usq-D8-lyA">
+            <objects>
+                <tabBarController storyboardIdentifier="TabBarController" id="LpR-aP-dSN" customClass="TabBarController" customModule="DrawAR" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Hkb-9L-wXY">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1yq-tT-bvA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1085" y="-204"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
