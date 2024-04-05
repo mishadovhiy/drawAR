@@ -26,7 +26,7 @@ class ARViewController: UIViewController {
         sceneView.delegate = self
         let scene = SCNScene()
         sceneView.scene = scene
-        sceneView.addGestureRecognizer(.init(target: self, action: #selector(nodePositionChanged(_:))))
+        sceneView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(nodePositionChanged(_:))))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,7 +60,7 @@ class ARViewController: UIViewController {
             plane.materials = [material]
             drawingNode = SCNNode(geometry: plane)
             print(self.positionHolder, " grrfeda")
-            drawingNode?.position = .init(x: self.positionHolder?.x ?? 0, y: self.positionHolder?.y ?? 0, z: self.positionHolder?.z ?? 0)//positionHolder.z
+            drawingNode?.position = .init(x: self.positionHolder?.x ?? 0, y: self.positionHolder?.y ?? 0, z: 0)//positionHolder.z
             sceneView.scene.rootNode.addChildNode(drawingNode!)
         }
     }

@@ -80,7 +80,7 @@ fileprivate extension DrawViewController {
         drawView.frame = .init(origin: .zero, size: drawSize)
         scrollView.addConstaits([.left:0, .right:0, .bottom:0, .top:0])
         drawViewFrameUpdated()
-        scrollView.contentOffset = .init(x: drawView.frame.width / 3, y: drawView.frame.height / 3)
+        scrollView.contentOffset = .init(x: scrollView.contentSize.width / 3, y: scrollView.contentSize.height / 3)
     }
     
     // MARK: updateUI
@@ -115,7 +115,6 @@ fileprivate extension DrawViewController {
         } else if newScale >= 3 {
             newScale = 3
         }
-        drawView?.layer.zoom(value: newScale)
         if drawView?.frame.origin != .zero {
             drawView?.frame.origin = .zero
         }
