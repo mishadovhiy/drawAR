@@ -37,8 +37,8 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-     //   parentTabBar?.addTopButton(at: .right, button: loadSaveButton)
-        parentTabBar?.addTopButton(at: .right, button: loadUploadButton)
+        parentTabBar?.addTopButton(at: .right, button: loadDeleteButton)
+        parentTabBar?.addTopButton(at: .right, button: loadAttachmentButton)
         if let drawing = parentTabBar?.dataModelController.drawings[parentTabBar?.drawingIndex ?? 0], !viewModel.drawingSettedFromDB {
             drawView?.drawing = drawing
             viewModel.drawingSettedFromDB = true
@@ -64,6 +64,10 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     }
     
     @objc private func uploadFromDevicePressed(_ sender:UIButton) {
+    }
+    
+    @objc private func deletePressed(_ sender: UIButton) {
+        
     }
     
     @objc private func savePressed(_ sender:UIButton) { }
@@ -108,7 +112,14 @@ fileprivate extension DrawViewController {
         return button
     }
     
-    var loadUploadButton:UIButton {
+    var loadDeleteButton:UIButton {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(uploadFromDevicePressed(_:)), for: .touchUpInside)
+        button.setTitle("Delete", for: .normal)
+        return button
+    }
+    
+    var loadAttachmentButton:UIButton {
         let button = UIButton()
         button.addTarget(self, action: #selector(uploadFromDevicePressed(_:)), for: .touchUpInside)
         button.setTitle("Add attachment", for: .normal)
