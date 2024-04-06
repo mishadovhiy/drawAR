@@ -9,7 +9,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ARViewController: UIViewController {
+class ARViewController: UIViewController, ARSCNViewDelegate {
     //MARK: - IBOutlet
     @IBOutlet private var sceneView: ARSCNView!
     private var parentTabBar:TabBarController? { tabBarController as? TabBarController }
@@ -48,9 +48,7 @@ class ARViewController: UIViewController {
     
     // MARK: - public methods
     public func nodeDrawed(_ img:UIImage?) {
-        if view == nil {
-            return
-        }
+        if view == nil { return }
         let material = SCNMaterial()
         material.diffuse.contents = img
         if let existingNode = drawingNode {
@@ -66,9 +64,7 @@ class ARViewController: UIViewController {
     }
     
     public var cameraPosition:SCNVector3? {
-        if view == nil {
-            return nil
-        }
+        if view == nil { return nil }
         guard let pointOfView = sceneView.pointOfView else { return nil }
         let transform = pointOfView.transform
         let orientation = SCNVector3(-transform.m31, -transform.m32, transform.m33)
@@ -92,6 +88,10 @@ class ARViewController: UIViewController {
             }
         }
     }
+    
+    public func removeNodePressed() {
+        
+    }
 }
 
 // MARK: - loadUI
@@ -102,9 +102,6 @@ fileprivate extension ARViewController {
         sceneView.session.run(configuration)
     }
 }
-
-// MARK: - ARSCNViewDelegate
-extension ARViewController: ARSCNViewDelegate { }
 
 // MARK: - configure
 extension ARViewController {

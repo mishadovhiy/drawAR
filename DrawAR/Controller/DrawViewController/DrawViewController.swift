@@ -9,7 +9,7 @@ import UIKit
 import PencilKit
 import SceneKit
 
-class DrawViewController: UIViewController {
+class DrawViewController: UIViewController, PKToolPickerObserver {
     // MARK: - IBOutlet
     private var scrollView:UIScrollView? {
         view.subviews.first(where: {$0 is UIScrollView}) as? UIScrollView
@@ -19,8 +19,23 @@ class DrawViewController: UIViewController {
     }
     private var parentTabBar:TabBarController? { tabBarController as? TabBarController }
     
-    // MARK: - public
+    // MARK: - properties
     public var positionHolder:SCNVector3?
+
+    private var cameraPosition:SCNVector3? { parentTabBar?.cameraPosition}
+    private var toolPicker:PKToolPicker?
+    private let viewModel:DrawViewModel = .init()
+
+    // MARK: - life-cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let zoomGestures = UIPinchGestureRecognizer(target: self, action: #selector(zoomGesture(_:)))
+        view.addGestureRecognizer(zoomGestures)
+        loadPencilKit()
+        loadToolPicker()
+    }
+    
+    // MARK: - public
     public var drawingImage:UIImage? {
         if #available(iOS 14.0, *) {
             if drawView?.drawing.strokes.count ?? 0 != 0 {
@@ -31,18 +46,6 @@ class DrawViewController: UIViewController {
         } else {
             return drawView?.drawing.image(from: drawView?.bounds ?? .zero, scale: 1.0)
         }
-    }
-    // MARK: - private properties
-    private var toolPicker:PKToolPicker?
-    private var cameraPosition:SCNVector3? { parentTabBar?.cameraPosition}
-
-    // MARK: - life-cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let zoomGestures = UIPinchGestureRecognizer(target: self, action: #selector(zoomGesture(_:)))
-        view.addGestureRecognizer(zoomGestures)
-        loadPencilKit()
-        loadToolPicker()
     }
 
     // MARK: - IBAction
@@ -86,35 +89,13 @@ fileprivate extension DrawViewController {
     // MARK: updateUI
     func drawViewFrameUpdated(contentOffcet:CGPoint? = nil) {
         scrollView?.contentSize = drawView?.frame.size ?? .zero - view.safeAreaInsets
-        if let contentOffcet,
-            contentOffcet.x > 0,
-            contentOffcet.y > 0,
-            contentOffcet.x < scrollView?.contentSize.width ?? 0,
-            contentOffcet.y > scrollView?.contentSize.height ?? 0 {
-            scrollView?.contentOffset = contentOffcet
-        }
-    }
-    
-    func updateLayout(for toolPicker: PKToolPicker) {
-        let obscuredFrame = toolPicker.frameObscured(in: view)
-        if obscuredFrame.isNull {
-            drawView?.contentInset = .zero
-            navigationItem.leftBarButtonItems = []
-        } else {
-            drawView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.bounds.maxY - obscuredFrame.minY, right: 0)
-        }
-        drawView?.scrollIndicatorInsets = drawView!.contentInset
     }
     
     func performZoom(_ newScale:CGFloat, isEnded:Bool) {
         let currentScale = drawView!.frame.size.width / drawView!.bounds.size.width
-        let senderScale = newScale
-        var newScale = currentScale * senderScale
-        if newScale <= 0.4 {
-            newScale = 0.4
-        } else if newScale >= 3 {
-            newScale = 3
-        }
+        let scale = viewModel.zoomScale(currentScale, newScale)
+        
+        drawView?.layer.zoom(value: scale)
         if drawView?.frame.origin != .zero {
             drawView?.frame.origin = .zero
         }
@@ -133,22 +114,6 @@ extension DrawViewController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
         parentTabBar?.nodeDrawed(drawingImage)
         drawViewFrameUpdated()
-    }
-}
-
-// MARK: - PKToolPickerObserver
-extension DrawViewController: PKToolPickerObserver {
-    func toolPickerSelectedToolDidChange(_ toolPicker: PKToolPicker) {
-        drawView?.tool = toolPicker.selectedTool
-        print(toolPicker)
-    }
-    
-    func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
-        updateLayout(for: toolPicker)
-    }
-    
-    func toolPickerVisibilityDidChange(_ toolPicker: PKToolPicker) {
-        updateLayout(for: toolPicker)
     }
 }
 

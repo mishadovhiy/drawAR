@@ -101,20 +101,21 @@ extension TabBarController {
         mainView.addSubview(primaryStack)
         let primarySubview = UIView()
         let emptyView = UIView()
-        [primarySubview].forEach {
+        [primarySubview, emptyView].forEach {
             primaryStack.addArrangedSubview($0)
         }
         let contentStack = UIStackView()
         primarySubview.addSubview(contentStack)
         let segmentedControll = UISegmentedControl()
         contentStack.addArrangedSubview(segmentedControll)
-        primaryStack.distribution = .fillEqually
         primaryStack.addConstaits([.left:0, .right:0, .top:0, .bottom:0])
         contentStack.addConstaits([.left:10, .right:-10, .top:5, .bottom:-5])
         mainView.addConstaits([.centerX:0, .top:0])
         segmentedControll.addConstaits([.height:31])
+        emptyView.addConstaits([.height: 20])
         primaryStack.axis = .vertical
         contentStack.axis = .horizontal
+        primaryStack.distribution = .fill
         mainView.layer.name = "segmentSuperview"
         emptyView.layer.name = "emptyView"
         viewControllers?.forEach({

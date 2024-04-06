@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D1159F32BC0CABA000083A0 /* DrawViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1159F22BC0CABA000083A0 /* DrawViewModel.swift */; };
 		8D28D9812BBCCD490025C6A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D28D9802BBCCD490025C6A7 /* AppDelegate.swift */; };
 		8D28D9832BBCCD490025C6A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D28D9822BBCCD490025C6A7 /* SceneDelegate.swift */; };
 		8D28D9852BBCCD490025C6A7 /* notUsing_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D28D9842BBCCD490025C6A7 /* notUsing_ViewController.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D1159F22BC0CABA000083A0 /* DrawViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewModel.swift; sourceTree = "<group>"; };
 		8D28D97D2BBCCD490025C6A7 /* DrawAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D28D9802BBCCD490025C6A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8D28D9822BBCCD490025C6A7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +57,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8D1159F12BC0CAA5000083A0 /* DrawViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8DC9445A2BBF7BF7001966C1 /* DrawViewController.swift */,
+				8D1159F42BC0CAC0000083A0 /* ViewModel */,
+			);
+			path = DrawViewController;
+			sourceTree = "<group>";
+		};
+		8D1159F42BC0CAC0000083A0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8D1159F22BC0CABA000083A0 /* DrawViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		8D1159F62BC0CD58000083A0 /* ARViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8DC9445C2BBF7C07001966C1 /* ARViewController.swift */,
+			);
+			path = ARViewController;
+			sourceTree = "<group>";
+		};
 		8D28D9742BBCCD490025C6A7 = {
 			isa = PBXGroup;
 			children = (
@@ -108,8 +135,8 @@
 			isa = PBXGroup;
 			children = (
 				8DC944582BBF7AF9001966C1 /* TabBarController.swift */,
-				8DC9445A2BBF7BF7001966C1 /* DrawViewController.swift */,
-				8DC9445C2BBF7C07001966C1 /* ARViewController.swift */,
+				8D1159F12BC0CAA5000083A0 /* DrawViewController */,
+				8D1159F62BC0CD58000083A0 /* ARViewController */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -213,6 +240,7 @@
 				8DC9445B2BBF7BF7001966C1 /* DrawViewController.swift in Sources */,
 				8D5A24782BBE022C00ABEBA7 /* UIView.swift in Sources */,
 				8DF521FF2BBF05D700E8351B /* UIGestureRecognizer.swift in Sources */,
+				8D1159F32BC0CABA000083A0 /* DrawViewModel.swift in Sources */,
 				8D5A24762BBDFDE600ABEBA7 /* RequestAccess.swift in Sources */,
 				8D28D9832BBCCD490025C6A7 /* SceneDelegate.swift in Sources */,
 				8D28D9972BBD9D860025C6A7 /* CALayer.swift in Sources */,
