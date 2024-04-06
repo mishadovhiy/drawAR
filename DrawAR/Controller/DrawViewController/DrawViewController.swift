@@ -24,7 +24,7 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     
     private var cameraPosition:SCNVector3? { parentTabBar?.cameraPosition}
     private var toolPicker:PKToolPicker?
-    private let viewModel:DrawViewModel = .init()
+    private var viewModel:DrawViewModel = .init()
     
     // MARK: - life-cycle
     override func viewDidLoad() {
@@ -37,10 +37,11 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        parentTabBar?.addTopButton(at: .right, button: loadSaveButton)
+     //   parentTabBar?.addTopButton(at: .right, button: loadSaveButton)
         parentTabBar?.addTopButton(at: .right, button: loadUploadButton)
-        if let drawing = parentTabBar?.dataModelController.drawings[parentTabBar?.drawingIndex ?? 0] {
+        if let drawing = parentTabBar?.dataModelController.drawings[parentTabBar?.drawingIndex ?? 0], !viewModel.drawingSettedFromDB {
             drawView?.drawing = drawing
+            viewModel.drawingSettedFromDB = true
         }
     }
     

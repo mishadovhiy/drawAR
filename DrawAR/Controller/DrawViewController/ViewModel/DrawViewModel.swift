@@ -8,6 +8,7 @@
 import Foundation
 
 struct DrawViewModel {
+    var drawingSettedFromDB = false
     func zoomScale(_ currentScale:CGFloat, _ senderScale:CGFloat) -> CGFloat {
         var newScale = currentScale * senderScale
         if newScale <= 0.4 {
