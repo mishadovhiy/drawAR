@@ -43,25 +43,34 @@
                                                         <constraint firstAttribute="height" constant="300" id="Xfe-LF-W0u"/>
                                                     </constraints>
                                                 </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Empty project" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fX-jr-eNi">
+                                                    <rect key="frame" x="0.0" y="140" width="150" height="20.333333333333343"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="DcA-Ot-0Jh" secondAttribute="bottom" id="8Nc-pU-g6d"/>
                                                 <constraint firstAttribute="trailing" secondItem="DcA-Ot-0Jh" secondAttribute="trailing" id="B8D-m6-Lw7"/>
+                                                <constraint firstItem="3fX-jr-eNi" firstAttribute="centerX" secondItem="6K2-Zu-PrW" secondAttribute="centerX" id="GrJ-Hd-elV"/>
                                                 <constraint firstItem="DcA-Ot-0Jh" firstAttribute="leading" secondItem="6K2-Zu-PrW" secondAttribute="leading" id="bnF-iT-gAm"/>
                                                 <constraint firstItem="DcA-Ot-0Jh" firstAttribute="top" secondItem="6K2-Zu-PrW" secondAttribute="top" id="mlw-fT-wUl"/>
+                                                <constraint firstItem="3fX-jr-eNi" firstAttribute="centerY" secondItem="6K2-Zu-PrW" secondAttribute="centerY" id="oAu-IW-4T0"/>
+                                                <constraint firstItem="3fX-jr-eNi" firstAttribute="width" secondItem="6K2-Zu-PrW" secondAttribute="width" id="szw-QD-BfO"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="imageView" destination="DcA-Ot-0Jh" id="TEf-sc-0il"/>
+                                            <outlet property="noDataLabel" destination="3fX-jr-eNi" id="yeG-xs-w23"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="MVE-KN-yI6"/>
-                        <color key="backgroundColor" systemColor="labelColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Qoz-nr-GwP" firstAttribute="leading" secondItem="MVE-KN-yI6" secondAttribute="leading" id="5Dl-eg-fGa"/>
                             <constraint firstItem="MVE-KN-yI6" firstAttribute="trailing" secondItem="Qoz-nr-GwP" secondAttribute="trailing" id="O79-Wr-8e5"/>
@@ -111,11 +120,8 @@
     <resources>
         <image name="plus.circle.fill" catalog="system" width="128" height="123"/>
         <image name="square.and.arrow.up" catalog="system" width="108" height="128"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="tertiarySystemGroupedBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

@@ -27,7 +27,7 @@ class DataModelController {
     
     var dataModel = DataModel()
     
-    var thumbnails = [UIImage]()
+    var thumbnails = [UIImage?]()
     var thumbnailTraitCollection = UITraitCollection() {
         didSet {
             if oldValue.userInterfaceStyle != thumbnailTraitCollection.userInterfaceStyle {
@@ -79,13 +79,17 @@ class DataModelController {
             traitCollection.performAsCurrent {
                 let image = drawing.image(from: thumbnailRect, scale: thumbnailScale)
                 DispatchQueue.main.async {
-                    self.updateThumbnail(image, at: index)
+                    if #available(iOS 14.0, *) {
+                        self.updateThumbnail(drawing.strokes.count == 0 ? nil : image, at: index)
+                    } else {
+                        self.updateThumbnail(image, at: index)
+                    }
                 }
             }
         }
     }
     
-    private func updateThumbnail(_ image: UIImage, at index: Int) {
+    private func updateThumbnail(_ image: UIImage?, at index: Int) {
         thumbnails[index] = image
         didChange()
     }

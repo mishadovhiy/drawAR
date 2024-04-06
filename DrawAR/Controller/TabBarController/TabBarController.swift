@@ -55,9 +55,9 @@ class TabBarController: UITabBarController {
         tabBar.isHidden = true
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -142,7 +142,9 @@ extension TabBarController {
         leftStack.layer.name = "leftButtonsStack"
         rightStack.layer.name = "rightButtonsStack"
         let backButton = UIButton()
-        backButton.setTitle("back", for: .normal)
+        backButton.setImage(.init(systemName: "chevron.backward"), for: .normal)
+        setTopButtonStyle(backButton)
+        backButton.isHidden = false
         backButton.addTarget(self, action: #selector(backButtonPressed(_:)), for: .touchUpInside)
         contentStack?.insertArrangedSubview(backButton, at: 0)
     }
@@ -197,11 +199,11 @@ extension TabBarController {
         settingsStackView?.layer.move(.top, value: !show ? firstFrame / -1 : 0)
     }
     
-    func setTopButtonStyle(_ button:UIButton) {
+    func setTopButtonStyle(_ button:UIButton, tintColor:UIColor = .label) {
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
-        button.tintColor = .label
-        button.titleLabel?.textColor = .label
-        button.setTitleColor(.label, for: .normal)
+        button.tintColor = tintColor
+        button.titleLabel?.textColor = tintColor
+        button.setTitleColor(tintColor, for: .normal)
         button.backgroundColor = .systemGray.withAlphaComponent(0.2)
         button.layer.borderColor = UIColor.systemGray3.withAlphaComponent(0.1).cgColor
         button.layer.borderWidth = 1
