@@ -81,7 +81,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             let node = result.node
             if sender.state == .changed {
                 let translation = sender.translation(in: sceneView)
-                let translationFactor: Float = 0.001
+                let translationFactor: Float = 0.00002
                 node.position.x += Float(translation.x) * translationFactor
                 node.position.y -= Float(translation.y) * translationFactor
                 sender.setTranslation(CGPoint.zero, in: sceneView)
