@@ -66,6 +66,9 @@ class DataModelController {
         for index in drawings.indices {
             generateThumbnail(index)
         }
+        if drawings.count == 0 {
+            newDrawing()
+        }
     }
     
     private func generateThumbnail(_ index: Int) {

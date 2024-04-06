@@ -33,17 +33,5 @@ extension DB {
             self.dict = dict
         }
         
-        var drawedImage:Data? {
-            get {
-                dict["drawedImage"] as? Data
-            }
-            set {
-                if let newValue {
-                    dict.updateValue(newValue, forKey: "drawedImage")
-                } else {
-                    dict.removeValue(forKey: "drawedImage")
-                }
-            }
-        }
     }
 }

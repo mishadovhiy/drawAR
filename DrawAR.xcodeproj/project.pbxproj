@@ -22,6 +22,7 @@
 		8D9FED832BC1BA5E007496BD /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9FED822BC1BA5E007496BD /* UIApplication.swift */; };
 		8D9FED852BC1C27A007496BD /* DrawListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9FED842BC1C27A007496BD /* DrawListViewController.swift */; };
 		8D9FED882BC1C47A007496BD /* DrawListCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9FED872BC1C47A007496BD /* DrawListCollectionCell.swift */; };
+		8D9FED8F2BC203AA007496BD /* LoadingTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9FED8E2BC203AA007496BD /* LoadingTableView.swift */; };
 		8DC944552BBF79F2001966C1 /* AR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DC944542BBF79F2001966C1 /* AR.storyboard */; };
 		8DC944572BBF7A17001966C1 /* Draw.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DC944562BBF7A17001966C1 /* Draw.storyboard */; };
 		8DC944592BBF7AF9001966C1 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC944582BBF7AF9001966C1 /* TabBarController.swift */; };
@@ -48,6 +49,7 @@
 		8D9FED822BC1BA5E007496BD /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		8D9FED842BC1C27A007496BD /* DrawListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawListViewController.swift; sourceTree = "<group>"; };
 		8D9FED872BC1C47A007496BD /* DrawListCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawListCollectionCell.swift; sourceTree = "<group>"; };
+		8D9FED8E2BC203AA007496BD /* LoadingTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableView.swift; sourceTree = "<group>"; };
 		8DC944542BBF79F2001966C1 /* AR.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AR.storyboard; sourceTree = "<group>"; };
 		8DC944562BBF7A17001966C1 /* Draw.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Draw.storyboard; sourceTree = "<group>"; };
 		8DC944582BBF7AF9001966C1 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				8D1159FB2BC0F341000083A0 /* Model */,
 				8D5A24852BBE075700ABEBA7 /* Controller */,
 				8D5A24862BBE076600ABEBA7 /* View */,
+				8D9FED902BC203BD007496BD /* UIModel */,
 				8DC9445E2BBF8D92001966C1 /* Mics */,
 				8D28D98E2BBCCD4B0025C6A7 /* Info.plist */,
 			);
@@ -204,6 +207,14 @@
 				8DC944582BBF7AF9001966C1 /* TabBarController.swift */,
 			);
 			path = TabBarController;
+			sourceTree = "<group>";
+		};
+		8D9FED902BC203BD007496BD /* UIModel */ = {
+			isa = PBXGroup;
+			children = (
+				8D9FED8E2BC203AA007496BD /* LoadingTableView.swift */,
+			);
+			path = UIModel;
 			sourceTree = "<group>";
 		};
 		8DC9445E2BBF8D92001966C1 /* Mics */ = {
@@ -297,6 +308,7 @@
 				8D9FED852BC1C27A007496BD /* DrawListViewController.swift in Sources */,
 				8D1159F32BC0CABA000083A0 /* DrawViewModel.swift in Sources */,
 				8D9FED802BC1B6CA007496BD /* DataModel.swift in Sources */,
+				8D9FED8F2BC203AA007496BD /* LoadingTableView.swift in Sources */,
 				8D5A24762BBDFDE600ABEBA7 /* RequestAccess.swift in Sources */,
 				8D9FED832BC1BA5E007496BD /* UIApplication.swift in Sources */,
 				8D28D9832BBCCD490025C6A7 /* SceneDelegate.swift in Sources */,

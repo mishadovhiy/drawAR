@@ -57,71 +57,12 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         }
     }
     
-    private func drawTestNode() {
-        let strokeSize: CGFloat = 40.0
-        let pointLocation = CGPoint(
-            x: 100,
-            y: 100)
-        if #available(iOS 14.0, *) {
-            let point = PKStrokePoint(
-                location: pointLocation,
-                timeOffset: 0,
-                size: CGSize(width: strokeSize, height: strokeSize),
-                opacity: 1, force: 1, azimuth: 1, altitude: 1)
-            let stroke = PKStroke(
-                ink: PKInk(.pencil, color: .red),
-                path: PKStrokePath(controlPoints: [point] ,
-                                   creationDate: Date()))
-            drawView?.drawing.strokes.append(stroke)
-        }
-    }
-    
-    @available(iOS 14.0, *)
-    func convertNodeToPKStrokePoint(node: SCNNode, sceneView: SCNView, canvasView: PKCanvasView) -> PKStrokePoint? {
-        guard let pointIn2D = convertNodeTo2DPoint(node: node, sceneView: sceneView) else {
-            return nil
-        }
-        
-        let convertedPoint = convertPointToCanvasCoordinates(pointIn2D, canvasView: canvasView)
-        
-        return PKStrokePoint(location: convertedPoint, timeOffset: .zero, size: .init(width: 200, height: 200), opacity: 1, force: 1, azimuth: 1, altitude: 1)
-        ///PKStrokePoint(location: convertedPoint, timeOffset: 0)
-    }
-
-    func convertNodeTo2DPoint(node: SCNNode, sceneView: SCNView) -> CGPoint? {
-        let nodePosition = node.worldPosition
-        let pointIn3D = SCNVector3ToGLKVector3(nodePosition)
-        let pointIn2D = sceneView.projectPoint(SCNVector3(x: pointIn3D.x, y: pointIn3D.y, z: pointIn3D.z))
-        
-        return CGPoint(x: CGFloat(pointIn2D.x), y: CGFloat(pointIn2D.y))
-    }
-
-    func convertPointToCanvasCoordinates(_ point: CGPoint, canvasView: PKCanvasView) -> CGPoint {
-        return canvasView.convert(point, from: canvasView.superview)
-    }
-    
     // MARK: - IBAction
     @objc private func zoomGesture(_ sender: UIPinchGestureRecognizer) {
         performZoom(sender.scale, isEnded: sender.state.isEnded)
     }
     
     @objc private func uploadFromDevicePressed(_ sender:UIButton) {
-        DispatchQueue(label: "db", qos: .userInitiated).async {
-            let data = DB.db.drawedImage
-            DispatchQueue.main.async {
-                if let node = SCNNode.configure(data) {
-                    if #available(iOS 14.0, *) {
-                        if let draw = self.convertNodeToPKStrokePoint(node: node, sceneView: self.parentTabBar!.arVC!.sceneView, canvasView: self.drawView!) {
-                            let stroke = PKStroke(
-                                ink: PKInk(.pencil, color: .red),
-                                path: PKStrokePath(controlPoints: [draw] ,
-                                                   creationDate: Date()))
-                            self.drawView?.drawing.strokes.append(stroke)
-                        }
-                    }
-                }
-            }
-        }
     }
     
     @objc private func savePressed(_ sender:UIButton) { }
@@ -196,16 +137,6 @@ fileprivate extension DrawViewController {
 extension DrawViewController: PKCanvasViewDelegate {
     func canvasViewDidBeginUsingTool(_ canvasView: PKCanvasView) {
         positionHolder = cameraPosition
-        let material = SCNMaterial()
-        material.diffuse.contents = drawingImage
-        
-        let plane = SCNPlane(width: 0.2, height: 0.2)
-        plane.materials = [material]
-        let drawingNode = SCNNode(geometry: plane)
-        let data = drawingNode.data
-        DispatchQueue.init(label: "db", qos: .userInitiated).async {
-            DB.db.drawedImage = data
-        }
     }
     
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
