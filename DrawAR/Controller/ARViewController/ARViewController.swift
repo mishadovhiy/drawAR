@@ -89,7 +89,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    public func removeNodePressed() {
+    public func removeNodePressed(_ img:UIImage?) {
         
     }
 }
