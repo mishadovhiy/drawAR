@@ -91,6 +91,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @objc private func removeNodePressed(_ sender: UIButton) {
+        parentTabBar?.drawVC?.positionHolder = cameraPosition
         drawingNode?.removeFromParentNode()
         if let drawedImage = parentTabBar?.drawVC?.drawingImage {
             nodeDrawed(drawedImage)

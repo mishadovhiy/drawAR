@@ -82,6 +82,14 @@
 			path = ARViewController;
 			sourceTree = "<group>";
 		};
+		8D1159FB2BC0F341000083A0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8D5A24842BBE074A00ABEBA7 /* Service */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		8D28D9742BBCCD490025C6A7 = {
 			isa = PBXGroup;
 			children = (
@@ -103,7 +111,7 @@
 			children = (
 				8D28D9802BBCCD490025C6A7 /* AppDelegate.swift */,
 				8D28D9822BBCCD490025C6A7 /* SceneDelegate.swift */,
-				8D5A24842BBE074A00ABEBA7 /* Service */,
+				8D1159FB2BC0F341000083A0 /* Model */,
 				8D5A24852BBE075700ABEBA7 /* Controller */,
 				8D5A24862BBE076600ABEBA7 /* View */,
 				8DC9445E2BBF8D92001966C1 /* Mics */,
