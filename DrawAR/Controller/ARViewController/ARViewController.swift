@@ -41,7 +41,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let drawedImage = parentTabBar?.drawVC?.drawingImage {
+        if let drawedImage = parentTabBar?.drawingImage {
             nodeDrawed(drawedImage)
         }
         parentTabBar?.addTopButton(at: .right, button: loadReloadNodesButton)
@@ -58,7 +58,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
             let plane = SCNPlane(width: 0.2, height: 0.2)
             plane.materials = [material]
             drawingNode = SCNNode(geometry: plane)
-            print(self.positionHolder, " grrfeda")
+            print(self.positionHolder ?? .init(), " grrfeda")
             drawingNode?.position = .init(x: self.positionHolder?.x ?? 0, y: self.positionHolder?.y ?? 0, z: 0)//positionHolder.z
             sceneView.scene.rootNode.addChildNode(drawingNode!)
         }
@@ -91,9 +91,9 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @objc private func removeNodePressed(_ sender: UIButton) {
-        parentTabBar?.drawVC?.positionHolder = cameraPosition
+        parentTabBar?.positionHolder = cameraPosition
         drawingNode?.removeFromParentNode()
-        if let drawedImage = parentTabBar?.drawVC?.drawingImage {
+        if let drawedImage = parentTabBar?.drawingImage {
             nodeDrawed(drawedImage)
         }
     }

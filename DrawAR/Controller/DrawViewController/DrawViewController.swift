@@ -37,7 +37,7 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        parentTabBar?.addTopButton(at: .right, button: loadDeleteButton)
+        parentTabBar?.addTopButton(at: .right, button: loadDeleteButton, tintColor: .red)
         parentTabBar?.addTopButton(at: .right, button: loadAttachmentButton)
         if let drawing = parentTabBar?.dataModelController.drawings[parentTabBar?.drawingIndex ?? 0], !viewModel.drawingSettedFromDB {
             drawView?.drawing = drawing

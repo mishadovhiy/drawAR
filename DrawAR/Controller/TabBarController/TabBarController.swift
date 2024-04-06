@@ -10,10 +10,10 @@ import SceneKit
 
 class TabBarController: UITabBarController {
     // MARK: - IBOutlet
-    var arVC:ARViewController? {
+    private var arVC:ARViewController? {
         viewControllers?.first(where: {$0 is ARViewController}) as? ARViewController
     }
-    var drawVC:DrawViewController? {
+    private var drawVC:DrawViewController? {
         viewControllers?.first(where: {$0 is DrawViewController}) as? DrawViewController
     }
     private var settingsStackView:UIStackView? {
@@ -34,12 +34,16 @@ class TabBarController: UITabBarController {
         arVC?.cameraPosition
     }
     public var positionHolder:SCNVector3? {
-        drawVC?.positionHolder
+        get {
+            drawVC?.positionHolder
+        }
+        set {
+            drawVC?.positionHolder = newValue
+        }
     }
+    public var drawingImage:UIImage? { drawVC?.drawingImage}
     var dataModelController: DataModelController!
     var drawingIndex:Int!
-    
-    // MARK: - private properties
     private let toggleSettingsAnimation = UIViewPropertyAnimator(duration: 0.4, curve: .easeInOut)
     
     // MARK: - life-cycle
@@ -75,10 +79,12 @@ class TabBarController: UITabBarController {
     }
     
     public func addTopButton(at position:ButtonPosition,
-                             button:UIButton) {
+                             button:UIButton,
+                             tintColor:UIColor? = nil
+    ) {
         let name = position == .left ? "leftButtonsStack" : "rightButtonsStack"
         let stackView = contentStack?.arrangedSubviews.first(where: {$0.layer.name == name}) as? UIStackView
-        setTopButtonStyle(button)
+        setTopButtonStyle(button, tintColor: tintColor)
         stackView?.addArrangedSubview(button)
         let animation = UIViewPropertyAnimator(duration: 0.22, curve: .easeIn) {
             button.isHidden = false
@@ -199,11 +205,12 @@ extension TabBarController {
         settingsStackView?.layer.move(.top, value: !show ? firstFrame / -1 : 0)
     }
     
-    func setTopButtonStyle(_ button:UIButton, tintColor:UIColor = .label) {
+    func setTopButtonStyle(_ button:UIButton, tintColor:UIColor? = nil) {
+        let resultTint = tintColor ?? .label
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
-        button.tintColor = tintColor
-        button.titleLabel?.textColor = tintColor
-        button.setTitleColor(tintColor, for: .normal)
+        button.tintColor = resultTint
+        button.titleLabel?.textColor = resultTint
+        button.setTitleColor(resultTint, for: .normal)
         button.backgroundColor = .systemGray.withAlphaComponent(0.2)
         button.layer.borderColor = UIColor.systemGray3.withAlphaComponent(0.1).cgColor
         button.layer.borderWidth = 1
