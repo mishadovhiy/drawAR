@@ -11,7 +11,7 @@ import ARKit
 
 class ARViewController: UIViewController, ARSCNViewDelegate {
     //MARK: - IBOutlet
-    @IBOutlet private var sceneView: ARSCNView!
+    @IBOutlet var sceneView: ARSCNView!
     private var parentTabBar:TabBarController? { tabBarController as? TabBarController }
 
     // MARK: - private properties

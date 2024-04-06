@@ -10,7 +10,7 @@ import SceneKit
 
 class TabBarController: UITabBarController {
     // MARK: - IBOutlet
-    private var arVC:ARViewController? {
+    var arVC:ARViewController? {
         viewControllers?.first(where: {$0 is ARViewController}) as? ARViewController
     }
     var drawVC:DrawViewController? {
@@ -36,6 +36,8 @@ class TabBarController: UITabBarController {
     public var positionHolder:SCNVector3? {
         drawVC?.positionHolder
     }
+    var dataModelController: DataModelController!
+    var drawingIndex:Int!
     
     // MARK: - private properties
     private let toggleSettingsAnimation = UIViewPropertyAnimator(duration: 0.4, curve: .easeInOut)
@@ -53,6 +55,20 @@ class TabBarController: UITabBarController {
         tabBar.isHidden = true
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        saveDrawingToDB()
+    }
+    
+    public func applicationWillResignActive() {
+        saveDrawingToDB()
+    }
+    
     // MARK: - public
     public func nodeDrawed(_ img:UIImage?) {
         arVC?.nodeDrawed(img)
@@ -62,24 +78,18 @@ class TabBarController: UITabBarController {
                              button:UIButton) {
         let name = position == .left ? "leftButtonsStack" : "rightButtonsStack"
         let stackView = contentStack?.arrangedSubviews.first(where: {$0.layer.name == name}) as? UIStackView
-        button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
-        button.tintColor = .label
-        button.titleLabel?.textColor = .label
-        button.setTitleColor(.label, for: .normal)
-        button.backgroundColor = .systemGray.withAlphaComponent(0.2)
-        button.layer.borderColor = UIColor.systemGray3.withAlphaComponent(0.1).cgColor
-        button.layer.borderWidth = 1
-        button.layer.cornerRadius = 6
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowRadius = 10
-        button.layer.shadowOffset = .init(width: 3, height: 3)
-        button.contentEdgeInsets = .init(top: 0, left: 5, bottom: 0, right: 5)
-        button.isHidden = true
+        setTopButtonStyle(button)
         stackView?.addArrangedSubview(button)
         let animation = UIViewPropertyAnimator(duration: 0.22, curve: .easeIn) {
             button.isHidden = false
         }
         animation.startAnimation()
+    }
+    
+    private func saveDrawingToDB() {
+        if let drawings = drawVC?.drawView?.drawing {
+            dataModelController.updateDrawing(drawings, at: drawingIndex)
+        }
     }
     
     // MARK: IBAction
@@ -114,6 +124,10 @@ class TabBarController: UITabBarController {
             break
         }
     }
+    
+    @objc private func backButtonPressed(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 // MARK: - loadUI
@@ -127,6 +141,10 @@ extension TabBarController {
         leftStack.spacing = 10
         leftStack.layer.name = "leftButtonsStack"
         rightStack.layer.name = "rightButtonsStack"
+        let backButton = UIButton()
+        backButton.setTitle("back", for: .normal)
+        backButton.addTarget(self, action: #selector(backButtonPressed(_:)), for: .touchUpInside)
+        contentStack?.insertArrangedSubview(backButton, at: 0)
     }
     
     func loadSegmentControl() {
@@ -179,7 +197,32 @@ extension TabBarController {
         settingsStackView?.layer.move(.top, value: !show ? firstFrame / -1 : 0)
     }
     
+    func setTopButtonStyle(_ button:UIButton) {
+        button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
+        button.tintColor = .label
+        button.titleLabel?.textColor = .label
+        button.setTitleColor(.label, for: .normal)
+        button.backgroundColor = .systemGray.withAlphaComponent(0.2)
+        button.layer.borderColor = UIColor.systemGray3.withAlphaComponent(0.1).cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 6
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowRadius = 10
+        button.layer.shadowOffset = .init(width: 3, height: 3)
+        button.contentEdgeInsets = .init(top: 0, left: 5, bottom: 0, right: 5)
+        button.isHidden = true
+    }
+    
     enum ButtonPosition {
     case left, right
+    }
+}
+
+extension TabBarController {
+    static func configure(model:DataModelController, index:Int) -> TabBarController {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
+        vc.dataModelController = model
+        vc.drawingIndex = index
+        return vc
     }
 }
