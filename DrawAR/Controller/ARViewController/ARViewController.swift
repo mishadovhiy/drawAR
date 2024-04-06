@@ -109,7 +109,7 @@ fileprivate extension ARViewController {
     
     var loadReloadNodesButton: UIButton {
         let button = UIButton()
-        button.setTitle("Reload", for: .normal)
+        button.setTitle("Reset position", for: .normal)
         button.addTarget(self, action: #selector(removeNodePressed(_:)), for: .touchUpInside)
         return button
     }

@@ -63,6 +63,9 @@ class TabBarController: UITabBarController {
         let name = position == .left ? "leftButtonsStack" : "rightButtonsStack"
         let stackView = contentStack?.arrangedSubviews.first(where: {$0.layer.name == name}) as? UIStackView
         button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
+        button.tintColor = .label
+        button.titleLabel?.textColor = .label
+        button.setTitleColor(.label, for: .normal)
         button.backgroundColor = .systemGray.withAlphaComponent(0.2)
         button.layer.borderColor = UIColor.systemGray3.withAlphaComponent(0.1).cgColor
         button.layer.borderWidth = 1
