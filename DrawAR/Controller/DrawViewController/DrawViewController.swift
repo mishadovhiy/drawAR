@@ -35,6 +35,12 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         loadToolPicker()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        parentTabBar?.addTopButton(at: .right, button: loadSaveButton)
+        parentTabBar?.addTopButton(at: .right, button: loadUploadButton)
+    }
+    
     // MARK: - public
     public var drawingImage:UIImage? {
         if #available(iOS 14.0, *) {
@@ -51,6 +57,14 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     // MARK: - IBAction
     @objc private func zoomGesture(_ sender: UIPinchGestureRecognizer) {
         performZoom(sender.scale, isEnded: sender.state.isEnded)
+    }
+    
+    @objc private func uploadFromDevicePressed(_ sender:UIButton) {
+        
+    }
+    
+    @objc private func savePressed(_ sender:UIButton) {
+        
     }
 }
 
@@ -84,6 +98,20 @@ fileprivate extension DrawViewController {
         scrollView.addConstaits([.left:0, .right:0, .bottom:0, .top:0])
         drawViewFrameUpdated()
         scrollView.contentOffset = .init(x: scrollView.contentSize.width / 3, y: scrollView.contentSize.height / 3)
+    }
+    
+    var loadSaveButton:UIButton {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(uploadFromDevicePressed(_:)), for: .touchUpInside)
+        button.setTitle("Save", for: .normal)
+        return button
+    }
+    
+    var loadUploadButton:UIButton {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(uploadFromDevicePressed(_:)), for: .touchUpInside)
+        button.setTitle("Add attachment", for: .normal)
+        return button
     }
     
     // MARK: updateUI

@@ -44,6 +44,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         if let drawedImage = parentTabBar?.drawVC?.drawingImage {
             nodeDrawed(drawedImage)
         }
+        parentTabBar?.addTopButton(at: .right, button: loadReloadNodesButton)
     }
     
     // MARK: - public methods
@@ -51,7 +52,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         if view == nil { return }
         let material = SCNMaterial()
         material.diffuse.contents = img
-        if let existingNode = drawingNode {
+        if let existingNode = drawingNode, existingNode.parent != nil {
             existingNode.geometry?.firstMaterial = material
         } else {
             let plane = SCNPlane(width: 0.2, height: 0.2)
@@ -89,8 +90,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    public func removeNodePressed(_ img:UIImage?) {
-        
+    @objc private func removeNodePressed(_ sender: UIButton) {
+        drawingNode?.removeFromParentNode()
+        if let drawedImage = parentTabBar?.drawVC?.drawingImage {
+            nodeDrawed(drawedImage)
+        }
     }
 }
 
@@ -100,6 +104,13 @@ fileprivate extension ARViewController {
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         sceneView.session.run(configuration)
+    }
+    
+    var loadReloadNodesButton: UIButton {
+        let button = UIButton()
+        button.setTitle("Reload", for: .normal)
+        button.addTarget(self, action: #selector(removeNodePressed(_:)), for: .touchUpInside)
+        return button
     }
 }
 

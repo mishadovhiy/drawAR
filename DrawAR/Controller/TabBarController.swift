@@ -49,7 +49,7 @@ class TabBarController: UITabBarController {
             ARViewController.configure()
         ]
         loadSegmentControl()
-     //   loadOptionsStack()
+        loadOptionsStack()
         tabBar.isHidden = true
     }
     
@@ -58,8 +58,41 @@ class TabBarController: UITabBarController {
         arVC?.nodeDrawed(img)
     }
     
+    public func addTopButton(at position:ButtonPosition,
+                             button:UIButton) {
+        let name = position == .left ? "leftButtonsStack" : "rightButtonsStack"
+        let stackView = contentStack?.arrangedSubviews.first(where: {$0.layer.name == name}) as? UIStackView
+        button.titleLabel?.font = .systemFont(ofSize: 12, weight: .medium)
+        button.backgroundColor = .systemGray.withAlphaComponent(0.2)
+        button.layer.borderColor = UIColor.systemGray3.withAlphaComponent(0.1).cgColor
+        button.layer.borderWidth = 1
+        button.layer.cornerRadius = 6
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowRadius = 10
+        button.layer.shadowOffset = .init(width: 3, height: 3)
+        button.contentEdgeInsets = .init(top: 0, left: 5, bottom: 0, right: 5)
+        button.isHidden = true
+        stackView?.addArrangedSubview(button)
+        let animation = UIViewPropertyAnimator(duration: 0.22, curve: .easeIn) {
+            button.isHidden = false
+        }
+        animation.startAnimation()
+    }
+    
     // MARK: IBAction
     @objc private func segmentedChanged(_ sender: UISegmentedControl) {
+        ["leftButtonsStack", "rightButtonsStack"].forEach { name in
+            let stackView = contentStack?.arrangedSubviews.first(where: {$0.layer.name == name}) as? UIStackView
+            stackView?.arrangedSubviews.forEach { button in
+                let animation = UIViewPropertyAnimator(duration: 0.22, curve: .easeOut) {
+                    button.isHidden = true
+                }
+                animation.addCompletion { _ in
+                    button.removeFromSuperview()
+                }
+                animation.startAnimation()
+            }
+        }
         selectedIndex = sender.selectedSegmentIndex
     }
     
@@ -83,15 +116,14 @@ class TabBarController: UITabBarController {
 // MARK: - loadUI
 extension TabBarController {
     func loadOptionsStack() {
-        let stackView = UIStackView()
-        contentStack?.addArrangedSubview(stackView)
-        let addDrawingButton = UIButton()
-        stackView.addArrangedSubview(addDrawingButton)
-        
-        addDrawingButton.setTitle("add drawing", for: .normal)
-        addDrawingButton.layer.name = "addDrawingButton"
-        stackView.spacing = 10
-        stackView.distribution = .fillEqually
+        let rightStack = UIStackView()
+        contentStack?.addArrangedSubview(rightStack)
+        let leftStack = UIStackView()
+        contentStack?.insertArrangedSubview(leftStack, at: 0)
+        rightStack.spacing = 10
+        leftStack.spacing = 10
+        leftStack.layer.name = "leftButtonsStack"
+        rightStack.layer.name = "rightButtonsStack"
     }
     
     func loadSegmentControl() {
@@ -121,7 +153,7 @@ extension TabBarController {
         viewControllers?.forEach({
             segmentedControll.insertSegment(withTitle: $0.tabBarItem.title, at: segmentedControll.numberOfSegments, animated: true)
         })
-        contentStack.spacing = 30
+        contentStack.spacing = 20
         segmentedControll.addTarget(self, action: #selector(segmentedChanged(_:)), for: .valueChanged)
         segmentedControll.selectedSegmentIndex = 0
         mainView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(toggleSettingsGesture(_:))))
@@ -142,5 +174,9 @@ extension TabBarController {
     func performToggleSettingsView(show:Bool) {
         let firstFrame = (settingsStackView?.superview?.frame.height ?? 0) + view.safeAreaInsets.top
         settingsStackView?.layer.move(.top, value: !show ? firstFrame / -1 : 0)
+    }
+    
+    enum ButtonPosition {
+    case left, right
     }
 }
