@@ -14,6 +14,7 @@
 		8D28D98A2BBCCD4B0025C6A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8D28D9892BBCCD4B0025C6A7 /* Assets.xcassets */; };
 		8D28D98D2BBCCD4B0025C6A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D28D98B2BBCCD4B0025C6A7 /* LaunchScreen.storyboard */; };
 		8D28D9972BBD9D860025C6A7 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D28D9962BBD9D860025C6A7 /* CALayer.swift */; };
+		8D556CDE2BC30E01000DC930 /* AudioToolboxService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D556CDD2BC30E01000DC930 /* AudioToolboxService.swift */; };
 		8D5A24762BBDFDE600ABEBA7 /* RequestAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5A24752BBDFDE600ABEBA7 /* RequestAccess.swift */; };
 		8D5A24782BBE022C00ABEBA7 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5A24772BBE022C00ABEBA7 /* UIView.swift */; };
 		8D9FED7C2BC152F5007496BD /* SCNNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D9FED7B2BC152F5007496BD /* SCNNode.swift */; };
@@ -41,6 +42,7 @@
 		8D28D98C2BBCCD4B0025C6A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8D28D98E2BBCCD4B0025C6A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D28D9962BBD9D860025C6A7 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
+		8D556CDD2BC30E01000DC930 /* AudioToolboxService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioToolboxService.swift; sourceTree = "<group>"; };
 		8D5A24752BBDFDE600ABEBA7 /* RequestAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAccess.swift; sourceTree = "<group>"; };
 		8D5A24772BBE022C00ABEBA7 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		8D9FED7B2BC152F5007496BD /* SCNNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNNode.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				8D5A24752BBDFDE600ABEBA7 /* RequestAccess.swift */,
+				8D556CDD2BC30E01000DC930 /* AudioToolboxService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				8D28D9832BBCCD490025C6A7 /* SceneDelegate.swift in Sources */,
 				8D9FED7C2BC152F5007496BD /* SCNNode.swift in Sources */,
 				8D28D9972BBD9D860025C6A7 /* CALayer.swift in Sources */,
+				8D556CDE2BC30E01000DC930 /* AudioToolboxService.swift in Sources */,
 				8D9FED882BC1C47A007496BD /* DrawListCollectionCell.swift in Sources */,
 				8D9FED7E2BC15455007496BD /* DB.swift in Sources */,
 				8DC9445D2BBF7C07001966C1 /* ARViewController.swift in Sources */,

@@ -27,7 +27,6 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     private var cameraPosition:SCNVector3? { parentTabBar?.cameraPosition}
     private var toolPicker:PKToolPicker?
     private var viewModel:DrawViewModel = .init()
-    
     // MARK: - life-cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,6 +112,7 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         let enuble = !(scrollView?.isScrollEnabled ?? false)
         performToggleScroll(enuble: enuble)
         sender.setTitle(enuble ? "Scroll enabled" : "Scroll disabled", for: .normal)
+        AppDelegate.shared?.audioBox.vibrate(style: .default)
     }
 }
 
@@ -140,7 +140,6 @@ fileprivate extension DrawViewController {
         }
         drawView.delegate = self
         scrollView.addSubview(drawView)
-        scrollView.indicatorStyle = .white
         let drawSize:CGSize = .init(width: view.frame.width * 2.5, height: view.frame.height * 2.5)
         drawView.frame = .init(origin: .zero, size: drawSize)
         scrollView.addConstaits([.left:0, .right:0, .bottom:0, .top:0])

@@ -10,9 +10,8 @@ import UIKit
 class DrawListViewController: UIViewController {
     
     @IBOutlet private weak var collectionView: UICollectionView!
-    
     var dataModelController = DataModelController()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
@@ -26,6 +25,7 @@ class DrawListViewController: UIViewController {
     }
     
     @IBAction func addDrawingPressed(_ sender: UIButton) {
+        AppDelegate.shared?.audioBox.vibrate(style: .default)
         dataModelController.newDrawing()
     }
 }
