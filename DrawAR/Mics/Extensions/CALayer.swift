@@ -21,8 +21,8 @@ extension CALayer {
     }
     
     func zoom(value:CGFloat) {
-        let newScale = value + ((CGFloat(1) - value) / 4)
-        transform = CATransform3DMakeScale(newScale, newScale, 1)
+     //   let newScale = value + ((CGFloat(1) - value) / 4)
+        transform = CATransform3DMakeScale(value, value, 1)
     }
 }
 

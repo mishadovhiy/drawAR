@@ -11,6 +11,7 @@ import SceneKit
 
 class DrawViewController: UIViewController, PKToolPickerObserver {
     // MARK: - IBOutlet
+    @IBOutlet weak var drawOverScrollIndicatorView: UIView!
     private var scrollView:UIScrollView? {
         view.subviews.first(where: {$0 is UIScrollView}) as? UIScrollView
     }
@@ -31,6 +32,7 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         super.viewDidLoad()
         let zoomGestures = UIPinchGestureRecognizer(target: self, action: #selector(zoomGesture(_:)))
         view.addGestureRecognizer(zoomGestures)
+        drawOverScrollIndicatorView.translatesAutoresizingMaskIntoConstraints = true
         loadPencilKit()
         loadToolPicker()
     }
@@ -56,6 +58,34 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         } else {
             return drawView?.drawing.image(from: drawView?.bounds ?? .zero, scale: 1.0)
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let draw = drawView?.drawing.bounds ?? .zero
+        let mainSize = UIApplication.shared.keyWindow?.bounds.size ?? .zero
+        let scroll = scrollView.contentOffset
+        let xHidden = calculateToggleScrollIndicator(drawRange: draw.minX...draw.maxX, scrollMin: scroll.x, scrollValue: mainSize.width)
+        let yHidden = calculateToggleScrollIndicator(drawRange: draw.minY...draw.maxY, scrollMin: scroll.y, scrollValue: mainSize.height)
+        drawOverScrollIndicatorView.isHidden = !(!xHidden || !yHidden)
+        if yHidden {
+            if draw.minY <= scroll.y {
+                drawOverScrollIndicatorView.frame = .init(origin: .init(x: 0, y: 0), size: .init(width: mainSize.width, height: 4))
+            } else {
+                drawOverScrollIndicatorView.frame = .init(origin: .init(x: 0, y: mainSize.height - 4), size: .init(width: mainSize.width, height: 4))
+            }
+        } else {
+            if draw.minX >= scroll.x {
+                drawOverScrollIndicatorView.frame = .init(origin: .init(x: mainSize.width - 4, y: 0), size: .init(width: 4, height: mainSize.width))
+            } else {
+                drawOverScrollIndicatorView.frame = .init(origin: .init(x: 0, y: 0), size: .init(width: 4, height: mainSize.width))
+            }
+        }
+    }
+    
+    func calculateToggleScrollIndicator(drawRange:ClosedRange<CGFloat>, scrollMin:CGFloat, scrollValue:CGFloat) -> Bool {
+        let scrollMax = scrollValue + scrollMin
+        let xScroll = scrollMin...scrollMax
+        return drawRange.contains(xScroll.lowerBound) || drawRange.contains(scrollMax) || xScroll.contains(drawRange.lowerBound) || xScroll.contains(drawRange.upperBound)
     }
     
     // MARK: - IBAction
@@ -104,6 +134,7 @@ fileprivate extension DrawViewController {
         scrollView.addConstaits([.left:0, .right:0, .bottom:0, .top:0])
         drawViewFrameUpdated()
         scrollView.contentOffset = .init(x: scrollView.contentSize.width / 3, y: scrollView.contentSize.height / 3)
+        scrollView.delegate = self
     }
     
     var loadSaveButton:UIButton {
