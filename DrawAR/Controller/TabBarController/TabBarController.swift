@@ -93,9 +93,7 @@ class TabBarController: UITabBarController {
     }
     
     private func saveDrawingToDB() {
-        if let drawings = drawVC?.drawView?.drawing {
-            dataModelController.updateDrawing(drawings, at: drawingIndex)
-        }
+        dataModelController.updateDrawing(drawVC?.drawView?.drawing, at: drawingIndex)
     }
     
     // MARK: IBAction

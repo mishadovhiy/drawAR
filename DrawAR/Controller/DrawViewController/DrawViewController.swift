@@ -67,7 +67,8 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     }
     
     @objc private func deletePressed(_ sender: UIButton) {
-        
+        drawView?.removeFromSuperview()
+        navigationController?.popViewController(animated: true)
     }
     
     @objc private func savePressed(_ sender:UIButton) { }
@@ -114,7 +115,7 @@ fileprivate extension DrawViewController {
     
     var loadDeleteButton:UIButton {
         let button = UIButton()
-        button.addTarget(self, action: #selector(uploadFromDevicePressed(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(deletePressed(_:)), for: .touchUpInside)
         button.setTitle("Delete", for: .normal)
         return button
     }

@@ -10,11 +10,7 @@ import PencilKit
 import os
 
 struct DataModel: Codable {
-    
-    static let defaultDrawingNames: [String] = ["Notes"]
-    
     static let canvasWidth: CGFloat = 768
-    
     var drawings: [PKDrawing] = []
     var signature = PKDrawing()
 }
@@ -41,40 +37,46 @@ class DataModelController {
     
     var observers = [DataModelControllerObserver]()
     
-    static let thumbnailSize = CGSize(width: 192, height: 256)
+    static let thumbnailSize = CGSize(width: 300, height: 150)
     
     var drawings: [PKDrawing] {
         get { dataModel.drawings }
         set { dataModel.drawings = newValue }
-    }
-    var signature: PKDrawing {
-        get { dataModel.signature }
-        set { dataModel.signature = newValue }
     }
     
     init() {
         loadDataModel()
     }
     
-    func updateDrawing(_ drawing: PKDrawing, at index: Int) {
-        dataModel.drawings[index] = drawing
-        generateThumbnail(index)
+    func updateDrawing(_ drawing: PKDrawing?, at index: Int) {
+        if let drawing {
+            dataModel.drawings[index] = drawing
+        } else {
+            dataModel.drawings.remove(at: index)
+        }
+        let size = UIApplication.shared.keyWindow?.screen.bounds.size ?? .init()
+        if let drawing {
+            generateThumbnail(index, size: size)
+        } else {
+            generateAllThumbnails()
+        }
         saveDataModel()
     }
     
     private func generateAllThumbnails() {
+        let size = UIApplication.shared.keyWindow?.screen.bounds.size ?? .init()
         for index in drawings.indices {
-            generateThumbnail(index)
+            generateThumbnail(index, size: size)
         }
         if drawings.count == 0 {
             newDrawing()
         }
     }
     
-    private func generateThumbnail(_ index: Int) {
+    private func generateThumbnail(_ index: Int, size:CGSize) {
         let drawing = drawings[index]
         let aspectRatio = DataModelController.thumbnailSize.width / DataModelController.thumbnailSize.height
-        let thumbnailRect = CGRect(x: 0, y: 0, width: DataModel.canvasWidth, height: DataModel.canvasWidth / aspectRatio)
+        let thumbnailRect = CGRect(x: size.width / 3, y: size.height / 3, width: DataModel.canvasWidth, height: DataModel.canvasWidth / aspectRatio)
         let thumbnailScale = UIScreen.main.scale * DataModelController.thumbnailSize.width / DataModel.canvasWidth
         let traitCollection = thumbnailTraitCollection
         
@@ -135,27 +137,16 @@ class DataModelController {
                     dataModel = try decoder.decode(DataModel.self, from: data)
                 } catch {
                     os_log("Could not load data model: %s", type: .error, error.localizedDescription)
-                    dataModel = self.loadDefaultDrawings()
+                    dataModel = .init()
                 }
             } else {
-                dataModel = self.loadDefaultDrawings()
+                dataModel = .init()
             }
             
             DispatchQueue.main.async {
                 self.setLoadedDataModel(dataModel)
             }
         }
-    }
-    
-    private func loadDefaultDrawings() -> DataModel {
-        var testDataModel = DataModel()
-        for sampleDataName in DataModel.defaultDrawingNames {
-            guard let data = NSDataAsset(name: sampleDataName)?.data else { continue }
-            if let drawing = try? PKDrawing(data: data) {
-                testDataModel.drawings.append(drawing)
-            }
-        }
-        return testDataModel
     }
     
     private func setLoadedDataModel(_ dataModel: DataModel) {
