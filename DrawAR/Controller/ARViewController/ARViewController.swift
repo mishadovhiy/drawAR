@@ -9,7 +9,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ARViewController: UIViewController, ARSCNViewDelegate {
+class ARViewController: UIViewController {
     //MARK: - IBOutlet
     @IBOutlet var sceneView: ARSCNView!
     private var parentTabBar:TabBarController? { tabBarController as? TabBarController }
@@ -99,12 +99,22 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     }
 }
 
+// MARK: - ARSCNViewDelegate
+extension ARViewController: ARSCNViewDelegate, ARSessionDelegate {
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        let currentTransform = frame.camera.transform
+        let worldPosition = drawingNode?.worldPosition ?? .init()
+        let screenPosition = sceneView.projectPoint(worldPosition)
+    }
+}
+
 // MARK: - loadUI
 fileprivate extension ARViewController {
     func loadARSession() {
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         sceneView.session.run(configuration)
+        sceneView.session.delegate = self
     }
     
     var loadReloadNodesButton: UIButton {

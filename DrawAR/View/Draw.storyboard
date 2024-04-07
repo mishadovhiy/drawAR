@@ -24,19 +24,30 @@
                                     <constraint firstAttribute="height" constant="4" id="Q6d-cv-IWi"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" alpha="0.10000000149011612" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cPs-KF-jmN">
+                                <rect key="frame" x="389" y="0.0" width="4" height="852"/>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="4" id="Cq9-KA-CjM"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="OHc-DN-VK2" secondAttribute="trailing" id="5DP-nR-kvA"/>
+                            <constraint firstAttribute="bottom" secondItem="cPs-KF-jmN" secondAttribute="bottom" id="7Jz-Fu-mrk"/>
                             <constraint firstItem="OHc-DN-VK2" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="EkK-o5-dSV"/>
                             <constraint firstAttribute="bottom" secondItem="OHc-DN-VK2" secondAttribute="bottom" id="LW8-vS-EJD"/>
+                            <constraint firstAttribute="trailing" secondItem="cPs-KF-jmN" secondAttribute="trailing" id="eNV-a3-a5R"/>
+                            <constraint firstItem="cPs-KF-jmN" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="eoe-5y-nrU"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Draw" id="hma-62-VW9"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="drawOverScrollIndicatorView" destination="OHc-DN-VK2" id="jbb-8b-djF"/>
+                        <outlet property="drawOverScrollXIndocatorView" destination="cPs-KF-jmN" id="IAh-v9-7Qj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
