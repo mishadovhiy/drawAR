@@ -32,6 +32,7 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     override func viewDidLoad() {
         super.viewDidLoad()
         let zoomGestures = UIPinchGestureRecognizer(target: self, action: #selector(zoomGesture(_:)))
+        zoomGestures.name = "zoom"
         view.addGestureRecognizer(zoomGestures)
         drawOverScrollIndicatorView.translatesAutoresizingMaskIntoConstraints = true
         drawOverScrollXIndocatorView.translatesAutoresizingMaskIntoConstraints = true
@@ -42,11 +43,16 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         parentTabBar?.addTopButton(at: .right, button: loadDeleteButton, tintColor: .red)
-      //  parentTabBar?.addTopButton(at: .right, button: loadAttachmentButton)
         if let drawing = parentTabBar?.dataModelController.drawings[parentTabBar?.drawingIndex ?? 0], !viewModel.drawingSettedFromDB {
             drawView?.drawing = drawing
             viewModel.drawingSettedFromDB = true
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                print("isIphonefsda")
+                scrollView?.isScrollEnabled = false
+            }
         }
+        parentTabBar?.addTopButton(at: .left, button: loadToggleScrollButton)
+        performToggleScroll(enuble: scrollView?.isScrollEnabled ?? true)
     }
     
     // MARK: - public
@@ -70,19 +76,16 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         let yHidden = calculateToggleScrollIndicator(drawRange: draw.minY...draw.maxY, scrollMin: scroll.y, scrollValue: mainSize.height)
         drawOverScrollIndicatorView.isHidden = yHidden
         drawOverScrollXIndocatorView.isHidden = xHidden
-     //   if yHidden {
-            if draw.minY <= scroll.y {
-                drawOverScrollIndicatorView.frame = .init(origin: .init(x: 0, y: 0), size: .init(width: mainSize.width, height: 4))
-            } else {
-                drawOverScrollIndicatorView.frame = .init(origin: .init(x: 0, y: mainSize.height - 4), size: .init(width: mainSize.width, height: 4))
-            }
-      //  } else {
-            if draw.minX >= scroll.x {
-                drawOverScrollXIndocatorView.frame = .init(origin: .init(x: mainSize.width - 4, y: 0), size: .init(width: 4, height: mainSize.width))
-            } else {
-                drawOverScrollXIndocatorView.frame = .init(origin: .init(x: 0, y: 0), size: .init(width: 4, height: mainSize.width))
-            }
-      //  }
+        if draw.minY <= scroll.y {
+            drawOverScrollIndicatorView.frame = .init(origin: .init(x: 0, y: 0), size: .init(width: mainSize.width, height: 4))
+        } else {
+            drawOverScrollIndicatorView.frame = .init(origin: .init(x: 0, y: mainSize.height - 4), size: .init(width: mainSize.width, height: 4))
+        }
+        if draw.minX >= scroll.x {
+            drawOverScrollXIndocatorView.frame = .init(origin: .init(x: mainSize.width - 4, y: 0), size: .init(width: 4, height: mainSize.width))
+        } else {
+            drawOverScrollXIndocatorView.frame = .init(origin: .init(x: 0, y: 0), size: .init(width: 4, height: mainSize.width))
+        }
     }
     
     func calculateToggleScrollIndicator(drawRange:ClosedRange<CGFloat>, scrollMin:CGFloat, scrollValue:CGFloat) -> Bool {
@@ -105,6 +108,12 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     }
     
     @objc private func savePressed(_ sender:UIButton) { }
+    
+    @objc private func toggleScrollEnubled(_ sender:UIButton) {
+        let enuble = !(scrollView?.isScrollEnabled ?? false)
+        performToggleScroll(enuble: enuble)
+        sender.setTitle(enuble ? "Scroll enabled" : "Scroll disabled", for: .normal)
+    }
 }
 
 // MARK: - loadUI
@@ -147,6 +156,14 @@ fileprivate extension DrawViewController {
         return button
     }
     
+    var loadToggleScrollButton:UIButton {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(toggleScrollEnubled(_:)), for: .touchUpInside)
+        button.setTitle(scrollView?.isScrollEnabled ?? true ? "Scroll enabled" : "Scroll disabled", for: .normal)
+        button.layer.name = "toggleScrollButton"
+        return button
+    }
+    
     var loadDeleteButton:UIButton {
         let button = UIButton()
         button.addTarget(self, action: #selector(deletePressed(_:)), for: .touchUpInside)
@@ -177,6 +194,15 @@ fileprivate extension DrawViewController {
         if isEnded {
             drawViewFrameUpdated()
         }
+    }
+    
+    private func performToggleScroll(enuble:Bool) {
+        scrollView?.isScrollEnabled = enuble
+        if #available(iOS 14.0, *) {
+            drawView?.drawingPolicy = enuble ? .pencilOnly : .anyInput
+        }
+        let zoomGesture = view.gestureRecognizers?.first(where: {$0.name == "zoom"})
+        zoomGesture?.isEnabled = enuble
     }
 }
 
