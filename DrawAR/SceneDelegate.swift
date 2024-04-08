@@ -37,6 +37,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillResignActive(_ scene: UIScene) {
         // Called when the scene will move from an active state to an inactive state.
         // This may occur due to temporary interruptions (ex. an incoming phone call).
+        let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController
+        navigationController?.viewControllers.forEach({
+            if let vc = $0 as? TabBarController {
+                vc.applicationWillResignActive()
+            }
+        })
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
