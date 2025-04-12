@@ -42,6 +42,8 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         parentTabBar?.addTopButton(at: .right, button: loadDeleteButton, tintColor: .red)
+        parentTabBar?.addTopButton(at: .right, button: loadShareButton, tintColor: .yellow)
+
         if let drawing = parentTabBar?.dataModelController.drawings[parentTabBar?.drawingIndex ?? 0], !viewModel.drawingSettedFromDB {
             drawView?.drawing = drawing
             viewModel.drawingSettedFromDB = true
@@ -106,6 +108,25 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         navigationController?.popViewController(animated: true)
     }
     
+    @objc private func sharePressed(_ sender: UIButton) {
+        let pdfRenderer = UIGraphicsPDFRenderer(bounds: view.bounds)
+           let pdfData = pdfRenderer.pdfData { context in
+               context.beginPage()
+               view.layer.render(in: context.cgContext)
+           }
+        
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        guard let pdfURL = paths.first?.appendingPathComponent("\(UUID().uuidString).pdf") else {
+            print("error creating pdf url")
+            return
+        }
+        try? pdfData.write(to: pdfURL)
+        let shareVC = UIActivityViewController(activityItems: [pdfURL], applicationActivities: nil)
+        shareVC.popoverPresentationController?.sourceView = self.view
+        shareVC.popoverPresentationController?.sourceRect = .init(origin: .zero, size: .zero)
+        navigationController?.present(shareVC, animated: true)
+    }
+    
     @objc private func savePressed(_ sender:UIButton) { }
     
     @objc private func toggleScrollEnubled(_ sender:UIButton) {
@@ -167,6 +188,13 @@ fileprivate extension DrawViewController {
         let button = UIButton()
         button.addTarget(self, action: #selector(deletePressed(_:)), for: .touchUpInside)
         button.setTitle("Delete", for: .normal)
+        return button
+    }
+    
+    var loadShareButton:UIButton {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(sharePressed(_:)), for: .touchUpInside)
+        button.setTitle("Share", for: .normal)
         return button
     }
     
