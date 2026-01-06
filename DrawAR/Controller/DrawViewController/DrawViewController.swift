@@ -19,6 +19,11 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     var drawView:PKCanvasView? {
         scrollView?.subviews.first(where: {$0.layer.name == "pensilView"}) as? PKCanvasView
     }
+    var backgroundImageView: UIImageView? {
+        scrollView?.subviews.first(where: {
+            $0 is UIImageView
+        }) as? UIImageView
+    }
     private var parentTabBar:TabBarController? { tabBarController as? TabBarController }
     
     // MARK: - properties
@@ -109,26 +114,18 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     }
     
     @objc private func sharePressed(_ sender: UIButton) {
-//        let pdfRenderer = UIGraphicsPDFRenderer(bounds: view.bounds)
-//           let pdfData = pdfRenderer.pdfData { context in
-//               context.beginPage()
-//               view.layer.render(in: context.cgContext)
-//           }
         if #available(iOS 14.0, *) {
             let svgData = drawView?.convertDrawingToSVG
             let stringData = svgData?.data(using: .utf8)
             let paths = FileManager.default.temporaryDirectory
             let pdfURL = paths.appendingPathComponent("\(UUID().uuidString).svg")
             try? stringData?.write(to: pdfURL)
-            let shareVC = UIActivityViewController(activityItems: [pdfURL], applicationActivities: nil)
-            shareVC.completionWithItemsHandler = { _, _, _, _ in
+            let shareVC = self.shareVC(data: pdfURL) {
                 let dataAtTemp = try? FileManager.default.contentsOfDirectory(atPath: paths.absoluteString)
                 dataAtTemp?.forEach {
                     try? FileManager.default.removeItem(at: .init(string: $0)!)
                 }
             }
-            shareVC.popoverPresentationController?.sourceView = self.view
-            shareVC.popoverPresentationController?.sourceRect = .init(origin: .zero, size: .zero)
             navigationController?.present(shareVC, animated: true)
         }
         
@@ -170,10 +167,33 @@ fileprivate extension DrawViewController {
         scrollView.addSubview(drawView)
         let drawSize:CGSize = .init(width: view.frame.width * 2.5, height: view.frame.height * 2.5)
         drawView.frame = .init(origin: .zero, size: drawSize)
-        scrollView.addConstaits([.left:0, .right:0, .bottom:0, .top:0])
+        scrollView.addConstaits([.left:0, .right:0, .bottom:0, .top:0], safeArea: false)
         drawViewFrameUpdated()
         scrollView.contentOffset = .init(x: scrollView.contentSize.width / 3, y: scrollView.contentSize.height / 3)
         scrollView.delegate = self
+
+        loadBackgroundImage()
+    }
+    
+    func loadBackgroundImage() {
+        let imageView = UIImageView()
+        imageView.image = .test
+        drawView?.insertSubview(imageView, at: 0)
+        imageView.addConstaits([.left:50, .right:50, .bottom:50, .top:50])
+        
+        let editorView = UIView()
+        imageView.addSubview(editorView)
+        editorView.translatesAutoresizingMaskIntoConstraints = false
+        editorView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        editorView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        editorView.backgroundColor = .red
+        
+        editorView.topAnchor.constraint(greaterThanOrEqualTo: editorView.superview!.topAnchor, constant: 50).isActive = true
+        editorView.leadingAnchor.constraint(greaterThanOrEqualTo: editorView.superview!.leadingAnchor, constant: 50).isActive = true
+        editorView.topAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        editorView.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+
+        
     }
     
     var loadSaveButton:UIButton {

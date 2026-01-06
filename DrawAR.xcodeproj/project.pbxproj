@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		822A7B052F0D4F2B00E1B680 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822A7B042F0D4F2B00E1B680 /* Keys.swift */; };
+		822A7B072F0D786200E1B680 /* ParametersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822A7B062F0D786200E1B680 /* ParametersViewController.swift */; };
+		822A7B0A2F0D7A3500E1B680 /* ParameterTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822A7B092F0D7A3500E1B680 /* ParameterTitleCell.swift */; };
+		822A7B0C2F0D7A4D00E1B680 /* ParameterSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822A7B0B2F0D7A4D00E1B680 /* ParameterSliderCell.swift */; };
+		822A7B0F2F0D7AD900E1B680 /* UICollectionViewCell+UITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822A7B0E2F0D7AD900E1B680 /* UICollectionViewCell+UITableViewCell.swift */; };
 		8D1159F32BC0CABA000083A0 /* DrawViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1159F22BC0CABA000083A0 /* DrawViewModel.swift */; };
 		8D28D9812BBCCD490025C6A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D28D9802BBCCD490025C6A7 /* AppDelegate.swift */; };
 		8D28D9832BBCCD490025C6A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D28D9822BBCCD490025C6A7 /* SceneDelegate.swift */; };
@@ -35,6 +39,10 @@
 
 /* Begin PBXFileReference section */
 		822A7B042F0D4F2B00E1B680 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		822A7B062F0D786200E1B680 /* ParametersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParametersViewController.swift; sourceTree = "<group>"; };
+		822A7B092F0D7A3500E1B680 /* ParameterTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterTitleCell.swift; sourceTree = "<group>"; };
+		822A7B0B2F0D7A4D00E1B680 /* ParameterSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterSliderCell.swift; sourceTree = "<group>"; };
+		822A7B0E2F0D7AD900E1B680 /* UICollectionViewCell+UITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+UITableViewCell.swift"; sourceTree = "<group>"; };
 		8D1159F22BC0CABA000083A0 /* DrawViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewModel.swift; sourceTree = "<group>"; };
 		8D28D97D2BBCCD490025C6A7 /* DrawAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D28D9802BBCCD490025C6A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +81,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		822A7B082F0D7A1C00E1B680 /* ParametersViewController */ = {
+			isa = PBXGroup;
+			children = (
+				822A7B062F0D786200E1B680 /* ParametersViewController.swift */,
+				822A7B0D2F0D7A5200E1B680 /* Cell */,
+			);
+			path = ParametersViewController;
+			sourceTree = "<group>";
+		};
+		822A7B0D2F0D7A5200E1B680 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				822A7B092F0D7A3500E1B680 /* ParameterTitleCell.swift */,
+				822A7B0B2F0D7A4D00E1B680 /* ParameterSliderCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		8D1159F12BC0CAA5000083A0 /* DrawViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +172,7 @@
 				8D9FED7B2BC152F5007496BD /* SCNNode.swift */,
 				8DF521FE2BBF05D700E8351B /* UIGestureRecognizer.swift */,
 				8D5A24772BBE022C00ABEBA7 /* UIView.swift */,
+				822A7B0E2F0D7AD900E1B680 /* UICollectionViewCell+UITableViewCell.swift */,
 				822A7B042F0D4F2B00E1B680 /* Keys.swift */,
 			);
 			path = Extensions;
@@ -163,6 +190,7 @@
 		8D5A24852BBE075700ABEBA7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				822A7B082F0D7A1C00E1B680 /* ParametersViewController */,
 				8D9FED862BC1C46C007496BD /* DrawListViewController */,
 				8D9FED8D2BC1E189007496BD /* TabBarController */,
 				8D1159F12BC0CAA5000083A0 /* DrawViewController */,
@@ -306,18 +334,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				822A7B0C2F0D7A4D00E1B680 /* ParameterSliderCell.swift in Sources */,
+				822A7B0A2F0D7A3500E1B680 /* ParameterTitleCell.swift in Sources */,
 				8DC944592BBF7AF9001966C1 /* TabBarController.swift in Sources */,
 				8D28D9812BBCCD490025C6A7 /* AppDelegate.swift in Sources */,
 				822A7B052F0D4F2B00E1B680 /* Keys.swift in Sources */,
 				8DC9445B2BBF7BF7001966C1 /* DrawViewController.swift in Sources */,
 				8D5A24782BBE022C00ABEBA7 /* UIView.swift in Sources */,
 				8DF521FF2BBF05D700E8351B /* UIGestureRecognizer.swift in Sources */,
+				822A7B0F2F0D7AD900E1B680 /* UICollectionViewCell+UITableViewCell.swift in Sources */,
 				8D9FED852BC1C27A007496BD /* DrawListViewController.swift in Sources */,
 				8D1159F32BC0CABA000083A0 /* DrawViewModel.swift in Sources */,
 				8D9FED802BC1B6CA007496BD /* DataModel.swift in Sources */,
 				8D9FED8F2BC203AA007496BD /* LoadingTableView.swift in Sources */,
 				8D5A24762BBDFDE600ABEBA7 /* RequestAccess.swift in Sources */,
 				8D9FED832BC1BA5E007496BD /* UIApplication.swift in Sources */,
+				822A7B072F0D786200E1B680 /* ParametersViewController.swift in Sources */,
 				8D28D9832BBCCD490025C6A7 /* SceneDelegate.swift in Sources */,
 				8D9FED7C2BC152F5007496BD /* SCNNode.swift in Sources */,
 				8D28D9972BBD9D860025C6A7 /* CALayer.swift in Sources */,

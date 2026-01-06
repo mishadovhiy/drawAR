@@ -18,7 +18,7 @@ extension UIApplication {
 }
 
 extension UIViewController {
-    func shareVC(data: Data, completion:(()->())? = nil) -> UIActivityViewController {
+    func shareVC(data: URL, completion:(()->())? = nil) -> UIActivityViewController {
         let shareVC = UIActivityViewController(activityItems: [data], applicationActivities: nil)
         shareVC.completionWithItemsHandler = { _, _, _, _ in
           //  completion?()
