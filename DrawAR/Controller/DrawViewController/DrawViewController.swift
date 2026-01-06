@@ -20,7 +20,7 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         scrollView?.subviews.first(where: {$0.layer.name == "pensilView"}) as? PKCanvasView
     }
     var backgroundImageView: UIImageView? {
-        drawView?.subviews.first(where: {
+        scrollView?.subviews.first(where: {
             $0 is UIImageView
         }) as? UIImageView
     }
@@ -189,7 +189,7 @@ extension DrawViewController: UIImagePickerControllerDelegate, UINavigationContr
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as? UIImage
         self.backgroundImageView?.image = image
-        backgroundImageView?.alpha = 0.5
+        backgroundImageView?.alpha = 0.3
         picker.dismiss(animated: true) {
             self.didUpdateBackgroundImage()
         }
@@ -234,8 +234,8 @@ fileprivate extension DrawViewController {
     func loadBackgroundImage() {
         let imageView = UIImageView()
         imageView.image = nil
-        imageView.isUserInteractionEnabled = true
-        drawView?.insertSubview(imageView, at: 0)
+        imageView.isUserInteractionEnabled = false
+        scrollView?.insertSubview(imageView, at: 0)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.widthAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
@@ -335,6 +335,7 @@ fileprivate extension DrawViewController {
         let scale = viewModel.zoomScale(currentScale, newScale)
         
         drawView?.layer.zoom(value: scale)
+        backgroundImageView?.layer.zoom(value: scale)
         if drawView?.frame.origin != .zero {
             drawView?.frame.origin = .zero
         }
