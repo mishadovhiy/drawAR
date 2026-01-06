@@ -11,7 +11,7 @@ class ParametersViewController: UIViewController {
 
     @IBOutlet private var collectionView: UICollectionView!
     private var data: ScreenModel!
-    private let collectionSize: CGSize = .init(width: 128, height: 36)
+    private let collectionSize: CGSize = .init(width: 128, height: 28)
     
     override func loadView() {
         super.loadView()

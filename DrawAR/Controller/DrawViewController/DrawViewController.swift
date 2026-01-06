@@ -162,7 +162,7 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         self.rootParatemersVC?.updateTableData(.init(
             "",
             collectionData: hasImage ? [
-                .title(.init("delete", didSelect: {
+                .title(.init("Delete", didSelect: {
                     self.backgroundImageView?.image = nil
                     self.didUpdateBackgroundImage()
                 })),
@@ -171,9 +171,28 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
                 }))
             ] : [
                 .title(.init("Select background", didSelect: {
-                    
+                    self.selectBackgroundDidPress()
                 }))
             ]))
+    }
+    
+    func selectBackgroundDidPress() {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.allowsEditing = false
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+}
+
+extension DrawViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        self.backgroundImageView?.image = image
+        backgroundImageView?.alpha = 0.5
+        picker.dismiss(animated: true) {
+            self.didUpdateBackgroundImage()
+        }
     }
 }
 
@@ -214,14 +233,20 @@ fileprivate extension DrawViewController {
     
     func loadBackgroundImage() {
         let imageView = UIImageView()
-        imageView.image = .test
+        imageView.image = nil
         imageView.isUserInteractionEnabled = true
         drawView?.insertSubview(imageView, at: 0)
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
         imageView.widthAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
         imageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
         imageView.centerXAnchor.constraint(equalTo: imageView.superview!.centerXAnchor).isActive = true
         imageView.centerYAnchor.constraint(equalTo: imageView.superview!.centerYAnchor).isActive = true
+        imageView.leadingAnchor.constraint(greaterThanOrEqualTo: imageView.superview!.leadingAnchor, constant: 20).isActive = true
+        imageView.trailingAnchor.constraint(greaterThanOrEqualTo: imageView.superview!.trailingAnchor, constant: 20).isActive = true
+        imageView.topAnchor.constraint(greaterThanOrEqualTo: imageView.superview!.topAnchor, constant: 20).isActive = true
+        imageView.bottomAnchor.constraint(greaterThanOrEqualTo: imageView.superview!.bottomAnchor, constant: 20).isActive = true
+
 
     }
     
@@ -234,7 +259,7 @@ fileprivate extension DrawViewController {
         editorView.topAnchor.constraint(greaterThanOrEqualTo: backgroundImageView!.topAnchor, constant: 50).isActive = true
         editorView.leadingAnchor.constraint(greaterThanOrEqualTo: backgroundImageView!.leadingAnchor, constant: 50).isActive = true
         editorView.topAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        editorView.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        editorView.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10).isActive = true
         
         editorView.addArrangedSubview(loadParametersChilderView)
         editorView.heightAnchor.constraint(equalToConstant: 100).isActive = true
