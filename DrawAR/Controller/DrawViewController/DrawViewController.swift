@@ -217,23 +217,28 @@ fileprivate extension DrawViewController {
         imageView.image = .test
         imageView.isUserInteractionEnabled = true
         drawView?.insertSubview(imageView, at: 0)
-        imageView.addConstaits([.left:50, .right:50, .bottom:50, .top:50])
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.widthAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
+        imageView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
+        imageView.centerXAnchor.constraint(equalTo: imageView.superview!.centerXAnchor).isActive = true
+        imageView.centerYAnchor.constraint(equalTo: imageView.superview!.centerYAnchor).isActive = true
+
     }
     
     func loadEditorParametersView() {
         let editorView = UIStackView()
-        drawView?.addSubview(editorView)
+        scrollView?.addSubview(editorView)
         editorView.translatesAutoresizingMaskIntoConstraints = false
-        editorView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        editorView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        editorView.backgroundColor = .red
+        editorView.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
-        editorView.topAnchor.constraint(greaterThanOrEqualTo: editorView.superview!.topAnchor, constant: 50).isActive = true
-        editorView.leadingAnchor.constraint(greaterThanOrEqualTo: editorView.superview!.leadingAnchor, constant: 50).isActive = true
+        editorView.topAnchor.constraint(greaterThanOrEqualTo: backgroundImageView!.topAnchor, constant: 50).isActive = true
+        editorView.leadingAnchor.constraint(greaterThanOrEqualTo: backgroundImageView!.leadingAnchor, constant: 50).isActive = true
         editorView.topAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
         editorView.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         
         editorView.addArrangedSubview(loadParametersChilderView)
+        editorView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+
         editorView.layer.zPosition = 999
     }
     
@@ -252,8 +257,10 @@ fileprivate extension DrawViewController {
             rootViewController: parametersVC()
         )
         addChild(nav)
-        nav.view.backgroundColor = .red
         nav.didMove(toParent: self)
+        nav.view.backgroundColor = .systemGray.withAlphaComponent(0.25)
+        nav.view.layer.cornerRadius = 6
+        nav.view.layer.masksToBounds = true
         return nav.view
     }
     

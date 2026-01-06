@@ -124,25 +124,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EEc-Xf-1k5">
-                                <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EEc-Xf-1k5">
+                                <rect key="frame" x="10" y="118" width="383" height="666"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Twf-bv-gNb">
-                                    <size key="itemSize" width="128" height="128"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Twf-bv-gNb">
+                                    <size key="itemSize" width="128" height="36"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ParameterTitleCell" id="1ho-w6-zky" customClass="ParameterTitleCell" customModule="DrawAR" customModuleProvider="target">
-                                        <rect key="frame" x="30.333333333333332" y="0.0" width="67.333333333333314" height="38"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="P2q-L9-KJP">
-                                            <rect key="frame" x="0.0" y="0.0" width="67.333333333333314" height="38"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="36"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dyt-PG-yhF">
-                                                    <rect key="frame" x="15.000000000000004" y="10" width="37.333333333333343" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dyt-PG-yhF">
+                                                    <rect key="frame" x="15" y="10" width="98" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -161,25 +161,22 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ParameterSliderCell" id="Fml-HC-J7d" customClass="ParameterSliderCell" customModule="DrawAR" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="48" width="128" height="60"/>
+                                        <rect key="frame" x="0.0" y="48.333333333333336" width="128" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CyX-gx-qBd">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="60"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="36"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="wes-Qr-Hdj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="60"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="60" id="R6t-00-K0o"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="10" y="10" width="108" height="16"/>
                                                 </slider>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="wes-Qr-Hdj" firstAttribute="top" secondItem="CyX-gx-qBd" secondAttribute="top" id="7ef-iY-cDU"/>
-                                                <constraint firstAttribute="bottom" secondItem="wes-Qr-Hdj" secondAttribute="bottom" id="83x-Ub-3p2"/>
-                                                <constraint firstItem="wes-Qr-Hdj" firstAttribute="leading" secondItem="CyX-gx-qBd" secondAttribute="leading" id="ESb-rE-tDA"/>
-                                                <constraint firstAttribute="trailing" secondItem="wes-Qr-Hdj" secondAttribute="trailing" id="yz6-hL-6NE"/>
+                                                <constraint firstItem="wes-Qr-Hdj" firstAttribute="top" secondItem="CyX-gx-qBd" secondAttribute="top" constant="10" id="7ef-iY-cDU"/>
+                                                <constraint firstAttribute="bottom" secondItem="wes-Qr-Hdj" secondAttribute="bottom" constant="10" id="83x-Ub-3p2"/>
+                                                <constraint firstItem="wes-Qr-Hdj" firstAttribute="leading" secondItem="CyX-gx-qBd" secondAttribute="leading" constant="10" id="ESb-rE-tDA"/>
+                                                <constraint firstAttribute="trailing" secondItem="wes-Qr-Hdj" secondAttribute="trailing" constant="10" id="yz6-hL-6NE"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -193,9 +190,9 @@
                         <viewLayoutGuide key="safeArea" id="NZ3-u4-URU"/>
                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                         <constraints>
-                            <constraint firstItem="EEc-Xf-1k5" firstAttribute="leading" secondItem="NZ3-u4-URU" secondAttribute="leading" id="6Tq-VV-5kn"/>
+                            <constraint firstItem="EEc-Xf-1k5" firstAttribute="leading" secondItem="NZ3-u4-URU" secondAttribute="leading" constant="10" id="6Tq-VV-5kn"/>
                             <constraint firstItem="EEc-Xf-1k5" firstAttribute="top" secondItem="NZ3-u4-URU" secondAttribute="top" id="eZf-nT-w0G"/>
-                            <constraint firstItem="NZ3-u4-URU" firstAttribute="trailing" secondItem="EEc-Xf-1k5" secondAttribute="trailing" id="j0i-a7-gT6"/>
+                            <constraint firstItem="EEc-Xf-1k5" firstAttribute="trailing" secondItem="NZ3-u4-URU" secondAttribute="trailing" id="v95-Me-3Bf"/>
                             <constraint firstItem="NZ3-u4-URU" firstAttribute="bottom" secondItem="EEc-Xf-1k5" secondAttribute="bottom" id="w04-Ck-2dx"/>
                         </constraints>
                     </view>
