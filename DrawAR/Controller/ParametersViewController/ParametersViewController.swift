@@ -14,7 +14,23 @@ class ParametersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        updateTableData(data)
+        print("rfweadaefw")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.setNavigationBarHidden(self.navigationController?.viewControllers.count == 1, animated: true)
+    }
+    
+    public func updateTableData(_ newData: ScreenModel) {
+        if view.superview == nil {
+            return
+        }
+        data = newData
+        collectionView.reloadData()
     }
 }
 
@@ -39,6 +55,7 @@ extension ParametersViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        fatalError()
         switch data.collectionData[indexPath.row] {
         case .title(let data):
             data.didSelect()
@@ -52,6 +69,12 @@ extension ParametersViewController {
     struct ScreenModel {
         let title: String
         let collectionData: [CollectionDataType]
+        
+        init(_ title: String = "",
+             collectionData: [CollectionDataType] = []) {
+            self.title = title
+            self.collectionData = collectionData
+        }
     }
     
     enum CollectionDataType {
@@ -66,6 +89,11 @@ extension ParametersViewController {
         struct TitleModel {
             let title: String
             let didSelect: ()->()
+            
+            init(_ title: String, didSelect: @escaping () -> Void) {
+                self.title = title
+                self.didSelect = didSelect
+            }
         }
     }
     
@@ -73,6 +101,7 @@ extension ParametersViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil)
             .instantiateViewController(withIdentifier: .init(describing: Self.self)) as! Self
         vc.data = data
+        vc.title = data.title
         return vc
     }
 }

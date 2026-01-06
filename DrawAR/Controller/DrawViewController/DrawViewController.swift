@@ -20,7 +20,7 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         scrollView?.subviews.first(where: {$0.layer.name == "pensilView"}) as? PKCanvasView
     }
     var backgroundImageView: UIImageView? {
-        scrollView?.subviews.first(where: {
+        drawView?.subviews.first(where: {
             $0 is UIImageView
         }) as? UIImageView
     }
@@ -32,6 +32,11 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     private var cameraPosition:SCNVector3? { parentTabBar?.cameraPosition}
     private var toolPicker:PKToolPicker?
     private var viewModel:DrawViewModel = .init()
+    private var backgroundImageParametersBarNavigation: UINavigationController? {
+        children.first(where: {
+            $0 is UINavigationController
+        }) as? UINavigationController
+    }
     // MARK: - life-cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +64,8 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         }
         parentTabBar?.addTopButton(at: .left, button: loadToggleScrollButton)
         performToggleScroll(enuble: scrollView?.isScrollEnabled ?? true)
+        didUpdateBackgroundImage()
+
     }
     
     // MARK: - public
@@ -139,6 +146,35 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
         sender.setTitle(enuble ? "Scroll enabled" : "Scroll disabled", for: .normal)
         AppDelegate.shared?.audioBox.vibrate(style: .default)
     }
+    
+    func toBackgroundOpacityEditor() {
+        let vc = parametersVC(.init("Opacity", collectionData: [
+            .slider(.init(value: Float(self.backgroundImageView?.alpha ?? 0), valueDidChange: { newValue in
+                self.backgroundImageView?.alpha = CGFloat(newValue)
+            }))
+        ]))
+        backgroundImageParametersBarNavigation?.pushViewController(vc, animated: true)
+    }
+    
+    func didUpdateBackgroundImage() {
+        let hasImage = backgroundImageView?.image != nil
+        backgroundImageParametersBarNavigation?.popToRootViewController(animated: true)
+        self.rootParatemersVC?.updateTableData(.init(
+            "",
+            collectionData: hasImage ? [
+                .title(.init("delete", didSelect: {
+                    self.backgroundImageView?.image = nil
+                    self.didUpdateBackgroundImage()
+                })),
+                .title(.init("Opacity", didSelect: {
+                    self.toBackgroundOpacityEditor()
+                }))
+            ] : [
+                .title(.init("Select background", didSelect: {
+                    
+                }))
+            ]))
+    }
 }
 
 // MARK: - loadUI
@@ -173,16 +209,20 @@ fileprivate extension DrawViewController {
         scrollView.delegate = self
 
         loadBackgroundImage()
+        loadEditorParametersView()
     }
     
     func loadBackgroundImage() {
         let imageView = UIImageView()
         imageView.image = .test
+        imageView.isUserInteractionEnabled = true
         drawView?.insertSubview(imageView, at: 0)
         imageView.addConstaits([.left:50, .right:50, .bottom:50, .top:50])
-        
-        let editorView = UIView()
-        imageView.addSubview(editorView)
+    }
+    
+    func loadEditorParametersView() {
+        let editorView = UIStackView()
+        drawView?.addSubview(editorView)
         editorView.translatesAutoresizingMaskIntoConstraints = false
         editorView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         editorView.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -192,8 +232,29 @@ fileprivate extension DrawViewController {
         editorView.leadingAnchor.constraint(greaterThanOrEqualTo: editorView.superview!.leadingAnchor, constant: 50).isActive = true
         editorView.topAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
         editorView.leadingAnchor.constraint(greaterThanOrEqualTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-
         
+        editorView.addArrangedSubview(loadParametersChilderView)
+        editorView.layer.zPosition = 999
+    }
+    
+    func parametersVC(
+        _ data: ParametersViewController.ScreenModel = .init()
+    ) -> UIViewController {
+        return ParametersViewController.configure(data)
+    }
+    
+    var rootParatemersVC: ParametersViewController? {
+        backgroundImageParametersBarNavigation?.viewControllers.first as? ParametersViewController
+    }
+    
+    var loadParametersChilderView: UIView {
+        let nav = UINavigationController(
+            rootViewController: parametersVC()
+        )
+        addChild(nav)
+        nav.view.backgroundColor = .red
+        nav.didMove(toParent: self)
+        return nav.view
     }
     
     var loadSaveButton:UIButton {

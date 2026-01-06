@@ -127,7 +127,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EEc-Xf-1k5">
                                 <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Twf-bv-gNb">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Twf-bv-gNb">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -135,10 +135,10 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ParameterTitleCell" id="1ho-w6-zky" customClass="ParameterTitleCell" customModule="DrawAR" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="11" width="67.333333333333329" height="38"/>
+                                        <rect key="frame" x="30.333333333333332" y="0.0" width="67.333333333333314" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="P2q-L9-KJP">
-                                            <rect key="frame" x="0.0" y="0.0" width="67.333333333333329" height="38"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="67.333333333333314" height="38"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dyt-PG-yhF">
@@ -161,7 +161,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ParameterSliderCell" id="Fml-HC-J7d" customClass="ParameterSliderCell" customModule="DrawAR" customModuleProvider="target">
-                                        <rect key="frame" x="77.333333333333329" y="0.0" width="128" height="60"/>
+                                        <rect key="frame" x="0.0" y="48" width="128" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CyX-gx-qBd">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="60"/>
@@ -200,7 +200,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="collectionView" destination="EEc-Xf-1k5" id="LsF-5x-1gh"/>
+                        <outlet property="collectionView" destination="EEc-Xf-1k5" id="Usj-Mt-dZA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nIx-ef-OMu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
