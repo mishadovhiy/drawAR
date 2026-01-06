@@ -16,3 +16,15 @@ extension UIApplication {
         return scene?.windows.last(where: {$0.isKeyWindow })
     }
 }
+
+extension UIViewController {
+    func shareVC(data: Data, completion:(()->())? = nil) -> UIActivityViewController {
+        let shareVC = UIActivityViewController(activityItems: [data], applicationActivities: nil)
+        shareVC.completionWithItemsHandler = { _, _, _, _ in
+          //  completion?()
+        }
+        shareVC.popoverPresentationController?.sourceView = self.view
+        shareVC.popoverPresentationController?.sourceRect = .init(origin: .zero, size: .zero)
+        return shareVC
+    }
+}

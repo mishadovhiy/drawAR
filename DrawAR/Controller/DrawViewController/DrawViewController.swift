@@ -42,7 +42,7 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         parentTabBar?.addTopButton(at: .right, button: loadDeleteButton, tintColor: .red)
-        parentTabBar?.addTopButton(at: .right, button: loadShareButton, tintColor: .yellow)
+        parentTabBar?.addTopButton(at: .right, button: loadShareButton)
 
         if let drawing = parentTabBar?.dataModelController.drawings[parentTabBar?.drawingIndex ?? 0], !viewModel.drawingSettedFromDB {
             drawView?.drawing = drawing
@@ -109,22 +109,29 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     }
     
     @objc private func sharePressed(_ sender: UIButton) {
-        let pdfRenderer = UIGraphicsPDFRenderer(bounds: view.bounds)
-           let pdfData = pdfRenderer.pdfData { context in
-               context.beginPage()
-               view.layer.render(in: context.cgContext)
-           }
-        
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        guard let pdfURL = paths.first?.appendingPathComponent("\(UUID().uuidString).pdf") else {
-            print("error creating pdf url")
-            return
+//        let pdfRenderer = UIGraphicsPDFRenderer(bounds: view.bounds)
+//           let pdfData = pdfRenderer.pdfData { context in
+//               context.beginPage()
+//               view.layer.render(in: context.cgContext)
+//           }
+        if #available(iOS 14.0, *) {
+            let svgData = drawView?.convertDrawingToSVG
+            let stringData = svgData?.data(using: .utf8)
+            let paths = FileManager.default.temporaryDirectory
+            let pdfURL = paths.appendingPathComponent("\(UUID().uuidString).svg")
+            try? stringData?.write(to: pdfURL)
+            let shareVC = UIActivityViewController(activityItems: [pdfURL], applicationActivities: nil)
+            shareVC.completionWithItemsHandler = { _, _, _, _ in
+                let dataAtTemp = try? FileManager.default.contentsOfDirectory(atPath: paths.absoluteString)
+                dataAtTemp?.forEach {
+                    try? FileManager.default.removeItem(at: .init(string: $0)!)
+                }
+            }
+            shareVC.popoverPresentationController?.sourceView = self.view
+            shareVC.popoverPresentationController?.sourceRect = .init(origin: .zero, size: .zero)
+            navigationController?.present(shareVC, animated: true)
         }
-        try? pdfData.write(to: pdfURL)
-        let shareVC = UIActivityViewController(activityItems: [pdfURL], applicationActivities: nil)
-        shareVC.popoverPresentationController?.sourceView = self.view
-        shareVC.popoverPresentationController?.sourceRect = .init(origin: .zero, size: .zero)
-        navigationController?.present(shareVC, animated: true)
+        
     }
     
     @objc private func savePressed(_ sender:UIButton) { }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		822A7B052F0D4F2B00E1B680 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822A7B042F0D4F2B00E1B680 /* Keys.swift */; };
 		8D1159F32BC0CABA000083A0 /* DrawViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1159F22BC0CABA000083A0 /* DrawViewModel.swift */; };
 		8D28D9812BBCCD490025C6A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D28D9802BBCCD490025C6A7 /* AppDelegate.swift */; };
 		8D28D9832BBCCD490025C6A7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D28D9822BBCCD490025C6A7 /* SceneDelegate.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		822A7B042F0D4F2B00E1B680 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		8D1159F22BC0CABA000083A0 /* DrawViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawViewModel.swift; sourceTree = "<group>"; };
 		8D28D97D2BBCCD490025C6A7 /* DrawAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D28D9802BBCCD490025C6A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				8D9FED7B2BC152F5007496BD /* SCNNode.swift */,
 				8DF521FE2BBF05D700E8351B /* UIGestureRecognizer.swift */,
 				8D5A24772BBE022C00ABEBA7 /* UIView.swift */,
+				822A7B042F0D4F2B00E1B680 /* Keys.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 			files = (
 				8DC944592BBF7AF9001966C1 /* TabBarController.swift in Sources */,
 				8D28D9812BBCCD490025C6A7 /* AppDelegate.swift in Sources */,
+				822A7B052F0D4F2B00E1B680 /* Keys.swift in Sources */,
 				8DC9445B2BBF7BF7001966C1 /* DrawViewController.swift in Sources */,
 				8D5A24782BBE022C00ABEBA7 /* UIView.swift in Sources */,
 				8DF521FF2BBF05D700E8351B /* UIGestureRecognizer.swift in Sources */,
@@ -471,7 +475,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FQA2XH9ZUM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DrawAR/Info.plist;
@@ -486,7 +490,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dovhiy.drawAR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -501,7 +505,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = FQA2XH9ZUM;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DrawAR/Info.plist;
@@ -516,7 +520,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dovhiy.drawAR;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

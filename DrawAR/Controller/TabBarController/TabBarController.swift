@@ -56,7 +56,18 @@ class TabBarController: UITabBarController {
         ]
         loadSegmentControl()
         loadOptionsStack()
+        hidesBottomBarWhenPushed = true
         tabBar.isHidden = true
+        
+    }
+    
+    override func loadView() {
+        hidesBottomBarWhenPushed = true
+        tabBar.isHidden = true
+        super.loadView()
+        if #available(iOS 18.0, *) {
+            setTabBarHidden(true, animated: false)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
