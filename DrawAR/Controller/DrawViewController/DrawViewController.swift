@@ -114,7 +114,8 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     
     // MARK: - IBAction
     @objc private func zoomGesture(_ sender: UIPinchGestureRecognizer) {
-let location = sender.location(in: sender.view)
+
+        let location = sender.location(in: sender.view)
         guard let drawView else { return }
         let translateToPoint = CGAffineTransform(
              translationX: location.x,
