@@ -114,7 +114,31 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     
     // MARK: - IBAction
     @objc private func zoomGesture(_ sender: UIPinchGestureRecognizer) {
-        performZoom(sender.scale, isEnded: sender.state.isEnded)
+let location = sender.location(in: sender.view)
+        guard let drawView else { return }
+        let translateToPoint = CGAffineTransform(
+             translationX: location.x,
+             y: location.y
+         )
+
+         let translateBack = CGAffineTransform(
+             translationX: -location.x,
+             y: -location.y
+         )
+
+         drawView.transform =
+        drawView.transform
+                 .concatenating(translateToPoint)
+                 .concatenating(CGAffineTransform(scaleX: sender.scale, y: sender.scale))
+                 .concatenating(translateBack)
+        if drawView.frame.origin != .zero {
+            drawView.frame.origin = .zero
+        }
+        if sender.state.isEnded {
+            drawViewFrameUpdated()
+        } else {
+            sender.scale = 1
+        }
     }
     
     @objc private func uploadFromDevicePressed(_ sender:UIButton) {
@@ -336,20 +360,6 @@ fileprivate extension DrawViewController {
     // MARK: updateUI
     func drawViewFrameUpdated(contentOffcet:CGPoint? = nil) {
         scrollView?.contentSize = drawView?.frame.size ?? .zero - view.safeAreaInsets
-    }
-    
-    func performZoom(_ newScale:CGFloat, isEnded:Bool) {
-        let currentScale = drawView!.frame.size.width / drawView!.bounds.size.width
-        let scale = viewModel.zoomScale(currentScale, newScale)
-        
-        drawView?.layer.zoom(value: scale)
-        backgroundImageView?.layer.zoom(value: scale)
-        if drawView?.frame.origin != .zero {
-            drawView?.frame.origin = .zero
-        }
-        if isEnded {
-            drawViewFrameUpdated()
-        }
     }
     
     private func performToggleScroll(enuble:Bool) {
