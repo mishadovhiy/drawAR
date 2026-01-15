@@ -24,6 +24,11 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
             $0 is UIImageView
         }) as? UIImageView
     }
+    var background2ImageView: UIImageView? {
+        drawView?.subviews.first(where: {
+            $0 is UIImageView
+        }) as? UIImageView
+    }
     private var parentTabBar:TabBarController? { tabBarController as? TabBarController }
     
     // MARK: - properties
@@ -149,21 +154,22 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
     
     func toBackgroundOpacityEditor() {
         let vc = parametersVC(.init("Opacity", collectionData: [
-            .slider(.init(value: Float(self.backgroundImageView?.alpha ?? 0), valueDidChange: { newValue in
-                self.backgroundImageView?.alpha = CGFloat(newValue)
+            .slider(.init(value: Float(self.background2ImageView?.alpha ?? 0), valueDidChange: { newValue in
+                self.background2ImageView?.alpha = CGFloat(newValue)
             }))
         ]))
         backgroundImageParametersBarNavigation?.pushViewController(vc, animated: true)
     }
     
     func didUpdateBackgroundImage() {
-        let hasImage = backgroundImageView?.image != nil
+        let hasImage = background2ImageView?.image != nil
+        backgroundImageView?.image = background2ImageView?.image
         backgroundImageParametersBarNavigation?.popToRootViewController(animated: true)
         self.rootParatemersVC?.updateTableData(.init(
             "",
             collectionData: hasImage ? [
                 .title(.init("Delete", didSelect: {
-                    self.backgroundImageView?.image = nil
+                    self.background2ImageView?.image = nil
                     self.didUpdateBackgroundImage()
                 })),
                 .title(.init("Opacity", didSelect: {
@@ -188,8 +194,8 @@ class DrawViewController: UIViewController, PKToolPickerObserver {
 extension DrawViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as? UIImage
-        self.backgroundImageView?.image = image
-        backgroundImageView?.alpha = 0.3
+        self.background2ImageView?.image = image
+        background2ImageView?.alpha = 0.3
         picker.dismiss(animated: true) {
             self.didUpdateBackgroundImage()
         }
@@ -227,15 +233,17 @@ fileprivate extension DrawViewController {
         scrollView.contentOffset = .init(x: scrollView.contentSize.width / 3, y: scrollView.contentSize.height / 3)
         scrollView.delegate = self
 
-        loadBackgroundImage()
+        loadBackgroundImage(toView: scrollView)
+        loadBackgroundImage(toView: drawView)
         loadEditorParametersView()
+        backgroundImageView?.alpha = 0
     }
     
-    func loadBackgroundImage() {
+    func loadBackgroundImage(toView: UIView?) {
         let imageView = UIImageView()
         imageView.image = nil
         imageView.isUserInteractionEnabled = false
-        scrollView?.insertSubview(imageView, at: 0)
+        toView?.insertSubview(imageView, at: 0)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         imageView.widthAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
